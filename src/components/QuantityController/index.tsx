@@ -9,6 +9,7 @@ interface PropQuantityController extends inputProp {
   onInputchange?: (valueItem: number) => void
   onAddNumber?: (valueItem: number) => void
   onMinusone?: (valueItem: number) => void
+  onForcos?: (valueItem: number) => void
 }
 
 export default function QuantityController({
@@ -16,6 +17,7 @@ export default function QuantityController({
   onInputchange,
   onAddNumber,
   onMinusone,
+  onForcos,
   value,
   ...rest
 }: PropQuantityController) {
@@ -48,6 +50,11 @@ export default function QuantityController({
     setValueQuantity(minusone)
   }
 
+  const handleonForcos = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+    const _value = Number(e.target.value)
+    onForcos && onForcos(_value)
+  }
+
   return (
     <div className='flex '>
       <button onClick={handleminusone} className='border-1 flex h-8 w-8 items-center justify-center border'>
@@ -59,6 +66,7 @@ export default function QuantityController({
         type='text'
         value={value || valueQuantity}
         onChange={handleOnchange}
+        onBlur={handleonForcos}
         {...rest}
       />
       <button onClick={handleadd} className='border-1 flex h-8 w-8 items-center justify-center border'>

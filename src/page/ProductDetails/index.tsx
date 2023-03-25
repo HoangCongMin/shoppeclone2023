@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { getProductDetails, getProductList } from '../../apis/product.api'
 import { useParams } from 'react-router-dom'
 import Rating from '../../components/Rating'
-import { AiOutlineQuestionCircle, AiOutlineMinus } from 'react-icons/ai'
+import { AiOutlineQuestionCircle } from 'react-icons/ai'
 import { fomatMoney, saleUtil, allAPIid } from '../../utils/util'
 import { BsCartPlus } from 'react-icons/bs'
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md'
@@ -13,16 +13,30 @@ import QuantityController from '../../components/QuantityController'
 import { AddPurchases } from '../../apis/purchases.api'
 import purchases from '../../constants/purchases'
 import { Purchasesstatusall } from '../../types/purchases.type'
+import { useNavigate } from 'react-router-dom'
+import Path from '../../constants/path'
 
 export default function ProductDetails() {
   const { id: idprall } = useParams()
   const [buyCount, setBuyCount] = useState<number>(1)
-
-  // console.log(buyCount)
+  const navigate = useNavigate()
 
   const mutation = useMutation({
     mutationFn: (data: { product_id: string; buy_count: number }) => AddPurchases(data)
   })
+
+  const mutationBuyNow = useMutation({
+    mutationFn: AddPurchases
+  })
+
+  const handleBuyNow = async () => {
+    const res = await mutationBuyNow.mutateAsync({
+      buy_count: buyCount,
+      product_id: data?.data.data?._id as string
+    })
+    const purchase = res.data.data
+    navigate(Path.cart, { state: { purchaseId: purchase?._id } })
+  }
 
   const id = allAPIid(idprall as string)
   const { data } = useQuery({
@@ -111,7 +125,7 @@ export default function ProductDetails() {
 
   return (
     <div className='w-full bg-[#e5e7eb]'>
-      <div className='m-auto flex w-10/12 justify-between bg-white'>
+      <div className='m-auto flex w-10/12 max-w-screen-2xl	 justify-between bg-white'>
         <div className='w-6/12 pt-3'>
           <div className=' m-auto w-[95%]'>
             <div
@@ -202,20 +216,23 @@ export default function ProductDetails() {
                   <span className='text-base	'>thêm vào giỏ hàng</span>
                 </div>
               </button>
-              <button className='ml-4 flex h-12 w-[17%] items-center justify-center bg-orange text-white'>
+              <button
+                onClick={handleBuyNow}
+                className='ml-4 flex h-12 w-[17%] items-center justify-center bg-orange text-white'
+              >
                 Mua ngay
               </button>
             </div>
           </div>
         </div>
       </div>
-      <div className='m-auto mt-8 w-10/12 bg-white p-[10px]'>
+      <div className='m-auto mt-8 w-10/12 max-w-screen-2xl	 bg-white p-[10px]'>
         <div className='px-4 pt-4'>
           <div className='bg-[#00000005] p-[14px] text-lg	'>CHI TIẾT SẢN PHẨM</div>
           <div className='m-auto mt-7 w-[97.5%]' dangerouslySetInnerHTML={{ __html: data.data.data.description }} />
         </div>
       </div>
-      <div className='m-auto w-10/12'>
+      <div className='m-auto w-10/12 max-w-screen-2xl	'>
         <div className='mt-6 grid grid-cols-5 gap-2.5	'>
           {Productlistall?.data.data?.products.map((item: Product) => (
             <div key={item._id}>

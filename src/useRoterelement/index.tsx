@@ -4,6 +4,7 @@ import Login from '../page/Login'
 import Product from '../page/Product'
 import Register from '../layout/register'
 import Main from '../layout/main'
+import CartLayout from '../layout/CartLayout'
 import Proflie from '../page/Proflie'
 import { useContext } from 'react'
 import { mycreateContext } from '../context/context'
@@ -44,9 +45,9 @@ export default function useRoterelement() {
         {
           path: Path.cart,
           element: (
-            <Main>
+            <CartLayout>
               <Cart />
-            </Main>
+            </CartLayout>
           )
         }
       ]

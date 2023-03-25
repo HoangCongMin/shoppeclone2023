@@ -2,13 +2,14 @@ import { Product } from '../../../../types/productList.type'
 import { fomatMoney, formatNumberToSocialStyle, getParamSeo } from '../../../../utils/util'
 import Rating from '../../../../components/Rating'
 import { Link } from 'react-router-dom'
+import Path from '../../../../constants/path'
 
 interface Prop {
   itemall: Product
 }
 export default function ProductLists({ itemall }: Prop) {
   return (
-    <Link to={`${getParamSeo({ name: itemall.name, id: itemall._id })}`} key={itemall._id}>
+    <Link to={`${Path.Home}${getParamSeo({ name: itemall.name, id: itemall._id })}`}>
       <div className='col-span-1 transform bg-white pb-2 shadow hover:translate-y-[-0.0625rem] hover:shadow-3xl'>
         <div className='relative w-full pt-[100%]'>
           <img className='absolute top-0 left-0 h-full w-full object-cover' src={itemall.image} alt='' />
