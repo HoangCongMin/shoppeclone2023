@@ -1,5 +1,5 @@
-import RegisterNapbar from '../../components/registerNapbar'
-import Fotter from '../../components/Fotter'
+import RegisterNavbar from '../../components/RegisterNavbar'
+import Fotter from '../../components/Footer'
 
 interface Prop {
   children?: React.ReactNode
@@ -9,7 +9,7 @@ export default function Register({ children }: Prop) {
   return (
     <div>
       {' '}
-      <RegisterNapbar /> {children} <Fotter />
+      <RegisterNavbar /> {children} <Fotter />
     </div>
   )
 }

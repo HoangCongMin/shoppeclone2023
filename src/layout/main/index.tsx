@@ -1,5 +1,5 @@
 import NapBarMain from '../../components/napBarMain'
-import Fotter from '../../components/Fotter'
+import Footer from '../../components/Footer'
 interface mainitem {
   children?: React.ReactNode
 }
@@ -9,7 +9,7 @@ export default function Main({ children }: mainitem) {
     <div>
       <NapBarMain />
       {children}
-      <Fotter />
+      <Footer />
     </div>
   )
 }

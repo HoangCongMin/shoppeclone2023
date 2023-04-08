@@ -2,9 +2,10 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md'
 import { useNavigate, createSearchParams, Link } from 'react-router-dom'
 import { QueryConfig } from '../../index'
 import Path from '../../../../constants/path'
-import { Productconfig } from '../../../../types/productList.type'
+import { ProductConfig } from '../../../../types/productList.type'
 import classNames from 'classnames'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
+import { useTranslation } from 'react-i18next'
 
 interface pageSize {
   queryConfig: QueryConfig
@@ -12,13 +13,13 @@ interface pageSize {
 }
 export default function SortProduct({ queryConfig, pageSize }: pageSize) {
   const page = Number(queryConfig.page)
-  const activeSort_by = (sortByValue: Exclude<Productconfig['sort_by'], undefined>) => {
+  const activeSort_by = (sortByValue: Exclude<ProductConfig['sort_by'], undefined>) => {
     return sortByValue === queryConfig.sort_by
   }
 
   const navigate = useNavigate()
 
-  const handleSoft = (sortByValue: Exclude<Productconfig['sort_by'], undefined>) => {
+  const handleSoft = (sortByValue: Exclude<ProductConfig['sort_by'], undefined>) => {
     navigate({
       pathname: Path.Home,
       search: createSearchParams(
@@ -33,7 +34,7 @@ export default function SortProduct({ queryConfig, pageSize }: pageSize) {
     })
   }
 
-  const handleOnchange = (sortByValue: Exclude<Productconfig['order'], undefined>) => {
+  const handleOnchange = (sortByValue: Exclude<ProductConfig['order'], undefined>) => {
     navigate({
       pathname: Path.Home,
       search: createSearchParams({
@@ -44,11 +45,13 @@ export default function SortProduct({ queryConfig, pageSize }: pageSize) {
     })
   }
 
+  const { t } = useTranslation()
+
   return (
     <div className=' flex h-14 items-center bg-zinc-200 text-sm'>
       <div className='m-auto flex w-[97%] items-center justify-between'>
         <div className='flex w-[67%] justify-between '>
-          <span className='flex h-8 w-[15%] items-center justify-center'>Sắp xếp theo</span>
+          <span className='flex h-8 w-[15%] items-center justify-center'>{t('AsideFiller.Sorted by')}</span>
           <button
             onClick={() => handleSoft((queryConfig.sort_by = 'view'))}
             className={classNames('flex h-8 w-[15%] items-center justify-center', {
@@ -56,7 +59,7 @@ export default function SortProduct({ queryConfig, pageSize }: pageSize) {
               'bg-white': !activeSort_by('view')
             })}
           >
-            Phổ biến
+            {t('AsideFiller.Popular')}
           </button>
           <button
             onClick={() => handleSoft((queryConfig.sort_by = 'createdAt'))}
@@ -65,7 +68,7 @@ export default function SortProduct({ queryConfig, pageSize }: pageSize) {
               'bg-white': !activeSort_by('createdAt')
             })}
           >
-            Mới nhất
+            {t('AsideFiller.NewTest')}
           </button>
           <button
             onClick={() => handleSoft((queryConfig.sort_by = 'sold'))}
@@ -74,20 +77,24 @@ export default function SortProduct({ queryConfig, pageSize }: pageSize) {
               'bg-white': !activeSort_by('sold')
             })}
           >
-            Bán chạy
+            {t('AsideFiller.Selling')}
           </button>
           <div className='flex h-8 w-[30%] items-center justify-center bg-white'>
             <select
-              onChange={(e) => handleOnchange(e.target.value as Exclude<Productconfig['order'], undefined>)}
+              onChange={(e) => handleOnchange(e.target.value as Exclude<ProductConfig['order'], undefined>)}
               className='m-auto h-8 w-[90%] outline-none'
               name='gia'
               id='gia'
               value={queryConfig.order || ''}
             >
-              <option>giá</option>
+              <option>{t('AsideFiller.Price')}</option>
 
-              <option value='asc'>giá : từ thấp đến cao</option>
-              <option value='desc'>giá : từ cao đến thấp</option>
+              <option value='asc'>
+                {t('AsideFiller.Price')} : {t('AsideFiller.Price from low to high')}
+              </option>
+              <option value='desc'>
+                {t('AsideFiller.Price')} : {t('AsideFiller.Price from high to low')}
+              </option>
             </select>
           </div>
         </div>

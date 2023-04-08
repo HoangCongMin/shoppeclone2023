@@ -6,7 +6,7 @@ type InputProp<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > = {
   classNameError: string
-  classNamediv: string
+  classNameDiv: string
 } & InputHTMLAttributes<HTMLInputElement> &
   UseControllerProps<TFieldValues, TName>
 
@@ -14,7 +14,7 @@ export default function InputV2<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >(props: InputProp<TFieldValues, TName>) {
-  const { classNamediv, className, classNameError, value = '', type, onChange, ...rest } = props
+  const { classNameDiv, className, classNameError, value = '', type, onChange, ...rest } = props
   const { field, fieldState } = useController(props)
 
   const [localValue, setLocalValue] = useState<string>(field.value)
@@ -29,7 +29,7 @@ export default function InputV2<
     }
   }
   return (
-    <div className={classNamediv}>
+    <div className={classNameDiv}>
       <input {...field} {...rest} className={className} onChange={handleChange} value={value || localValue} />
       <div className={classNameError}>{fieldState.error?.message}</div>
     </div>

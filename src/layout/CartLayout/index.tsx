@@ -1,6 +1,6 @@
 import React from 'react'
-import Fotter from '../../components/Fotter'
-import NapbarCart from '../../components/NapbarCart'
+import Footer from '../../components/Footer'
+import NavbarCart from '../../components/NavbarCart'
 interface Props {
   children: React.ReactNode
 }
@@ -8,10 +8,10 @@ interface Props {
 export default function CartLayout({ children }: Props) {
   return (
     <div>
-      <NapbarCart />
+      <NavbarCart />
       {children}
 
-      <Fotter />
+      <Footer />
     </div>
   )
 }

@@ -1,9 +1,7 @@
 import classNames from 'classnames'
-// import { before, rearg } from 'lodash'
 import { Link, createSearchParams } from 'react-router-dom'
 import Path from '../../constants/path'
 import { QueryConfig } from '../../page/Product/index'
-// import { Productconfig } from '../../types/productList.type'
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io'
 
 interface Prop {
@@ -20,17 +18,13 @@ export default function Paginate({
   pageSize
 }: // data
 Prop) {
-  // const pages = Number(data)
   const pages = Number(queryConfig.page)
 
-  // console.log(pageSizes)
-
-  // const pageSize = Number(pageSizes)
   const renderPaginate = () => {
     let dotAfter = false
-    let dotBefro = false
+    let dotBefore = false
 
-    const dodotAfter = (index: number) => {
+    const doDotAfter = (index: number) => {
       if (!dotAfter) {
         dotAfter = true
         return (
@@ -42,9 +36,9 @@ Prop) {
       return null
     }
 
-    const dodotBefro = (index: number) => {
-      if (!dotBefro) {
-        dotBefro = true
+    const doDotBefore = (index: number) => {
+      if (!dotBefore) {
+        dotBefore = true
         return (
           <button key={index} className='mr-5 flex h-8 w-10 items-center justify-center text-[#00000066]'>
             ...
@@ -59,16 +53,16 @@ Prop) {
       .map((_, index) => {
         const pageName = index + 1
         if (pages <= range * 2 + 1 && pageName > pages + range && pageName < pageSize - range + 1) {
-          return dodotAfter(index)
+          return doDotAfter(index)
         } else if (pages > range * 2 + 1 && pages < pageSize - range * 2) {
           if (pageName < pages - range && pageName > range) {
-            return dodotBefro(index)
+            return doDotBefore(index)
           }
           if (pageName > pages + range && pageName < pageSize - range + 1) {
-            return dodotAfter(index)
+            return doDotAfter(index)
           }
         } else if (pages >= pageSize - range * 2 && pageName > range && pageName < pages - range) {
-          return dodotBefro(index)
+          return doDotBefore(index)
         }
 
         return (

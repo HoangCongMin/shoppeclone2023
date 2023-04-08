@@ -1,45 +1,52 @@
 import { createContext, useState } from 'react'
 import { user } from '../types/user.type'
-import { getlocalStorage, getProfile } from '../utils/auth'
+import { getLocalStorage, getProfile } from '../utils/auth'
 import { purchasesExtendItem } from '../page/Cart'
 
 export interface AppContextInterface {
   LoginAndRegister: boolean
   setLoginAndRegister: React.Dispatch<React.SetStateAction<boolean>>
   isRegister0k: boolean
-  setisRegister0k: React.Dispatch<React.SetStateAction<boolean>>
+  setIsRegister0k: React.Dispatch<React.SetStateAction<boolean>>
   profileUser: user | null
   setProfileUser: React.Dispatch<React.SetStateAction<user | null>>
   purchasesExtend: purchasesExtendItem[]
   setPurchasesExtend: React.Dispatch<React.SetStateAction<purchasesExtendItem[]>>
+  reset: () => void
 }
 
-const initialaccess_token: AppContextInterface = {
-  LoginAndRegister: Boolean(getlocalStorage()),
+const initialAccess_token: AppContextInterface = {
+  LoginAndRegister: Boolean(getLocalStorage()),
   setLoginAndRegister: () => null,
   isRegister0k: false,
-  setisRegister0k: () => null,
+  setIsRegister0k: () => null,
   profileUser: getProfile(),
   setProfileUser: () => null,
   purchasesExtend: [],
-  setPurchasesExtend: () => null
+  setPurchasesExtend: () => null,
+  reset: () => null
 }
 
-export const mycreateContext = createContext<AppContextInterface>(initialaccess_token)
+export const myCreateContext = createContext<AppContextInterface>(initialAccess_token)
 
 export const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [LoginAndRegister, setLoginAndRegister] = useState<boolean>(initialaccess_token.LoginAndRegister)
-  const [isRegister0k, setisRegister0k] = useState<boolean>(initialaccess_token.isRegister0k)
-  const [profileUser, setProfileUser] = useState<user | null>(initialaccess_token.profileUser)
-  const [purchasesExtend, setPurchasesExtend] = useState<purchasesExtendItem[]>(initialaccess_token.purchasesExtend)
-
+  const [LoginAndRegister, setLoginAndRegister] = useState<boolean>(initialAccess_token.LoginAndRegister)
+  const [isRegister0k, setIsRegister0k] = useState<boolean>(initialAccess_token.isRegister0k)
+  const [profileUser, setProfileUser] = useState<user | null>(initialAccess_token.profileUser)
+  const [purchasesExtend, setPurchasesExtend] = useState<purchasesExtendItem[]>(initialAccess_token.purchasesExtend)
+  const reset = () => {
+    setIsRegister0k(false)
+    setProfileUser(null)
+    setPurchasesExtend([])
+  }
   return (
-    <mycreateContext.Provider
+    <myCreateContext.Provider
       value={{
+        reset,
         LoginAndRegister,
         setLoginAndRegister,
         isRegister0k,
-        setisRegister0k,
+        setIsRegister0k,
         profileUser,
         setProfileUser,
         purchasesExtend,
@@ -47,6 +54,6 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
       }}
     >
       {children}
-    </mycreateContext.Provider>
+    </myCreateContext.Provider>
   )
 }

@@ -1,26 +1,28 @@
 import { useQuery, useMutation } from '@tanstack/react-query'
 import purchases from '../../constants/purchases'
-import { Purchasesstatusall } from '../../types/purchases.type'
+import { purchaseStatusAll } from '../../types/purchases.type'
 import { GetPurchases, buyPurchase, updatePurchase, deletePurchase } from '../../apis/purchases.api'
-import { fomatMoney, formatNumberToSocialStyle } from '../../utils/util'
+import { formatMoney, formatNumberToSocialStyle } from '../../utils/util'
 import QuantityController from '../../components/QuantityController'
-import { useEffect, useContext, useState } from 'react'
-import { Respurchases } from '../../types/purchases.type'
-import { omit, keyBy } from 'lodash'
+import { useEffect, useContext, useState, useMemo } from 'react'
+import { resPurchases } from '../../types/purchases.type'
+import omit from 'lodash/omit'
+import keyBy from 'lodash/keyBy'
 import { useLocation } from 'react-router-dom'
-import { mycreateContext } from '../../context/context'
+import { myCreateContext } from '../../context/context'
 
-export interface purchasesExtendItem extends Respurchases {
+export interface purchasesExtendItem extends resPurchases {
   checked: boolean
-  disible: boolean
+  disable: boolean
 }
+
 export default function Cart() {
   const location = useLocation()
   const stateBuyNow = (location.state as { purchaseId: string } | null)?.purchaseId
 
   const { data, refetch } = useQuery({
-    queryKey: ['purchases', { status: purchases.incart as Purchasesstatusall }],
-    queryFn: () => GetPurchases({ status: purchases.incart as Purchasesstatusall })
+    queryKey: ['purchases', { status: purchases.inCart as purchaseStatusAll }],
+    queryFn: () => GetPurchases({ status: purchases.inCart as purchaseStatusAll })
   })
 
   const mutation = useMutation({
@@ -30,7 +32,7 @@ export default function Cart() {
     }
   })
 
-  const mutatioBuyPurchase = useMutation({
+  const mutationBuyPurchase = useMutation({
     mutationFn: buyPurchase,
     onSuccess: () => {
       refetch()
@@ -46,8 +48,7 @@ export default function Cart() {
 
   const purchasesInCart = data?.data.data
 
-  const { setPurchasesExtend, purchasesExtend } = useContext(mycreateContext)
-  // const [purchasesExtend, setPurchasesExtend] = useState<purchasesExtendItem[]>([])
+  const { purchasesExtend, setPurchasesExtend } = useContext(myCreateContext)
 
   const handleCheckedItem = (id: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setPurchasesExtend(
@@ -57,20 +58,20 @@ export default function Cart() {
         return item
       })
     )
-  const handlecheckedall = purchasesExtend.every((item) => item.checked)
+  const handleCheckedAll = purchasesExtend.every((item) => item.checked)
 
-  const changehandlecheckedall = () =>
-    setPurchasesExtend((pre) =>
-      pre.map((item) => ({
+  const changeHandleCheckedAll = () =>
+    setPurchasesExtend((pre) => {
+      return pre.map((item) => ({
         ...item,
-        checked: !handlecheckedall
+        checked: !handleCheckedAll
       }))
-    )
-  const handleupdatecnount = (id: string, value: number, condition: boolean) => {
+    })
+  const handleUpdateCount = (id: string, value: number, condition: boolean) => {
     if (condition) {
       purchasesExtend.map((item) => {
         if (item._id === id) {
-          item.disible = true
+          item.disable = true
           mutation.mutate({
             ...item,
             product_id: item.product._id,
@@ -81,7 +82,7 @@ export default function Cart() {
     }
   }
 
-  const handleOnchagen = (id: string) => (value: number) =>
+  const handleOnChange = (id: string) => (value: number) =>
     setPurchasesExtend(
       purchasesInCart?.map((item) => {
         if (item._id === id) {
@@ -102,51 +103,58 @@ export default function Cart() {
   //   )
   // }
 
-  const itemChecked = purchasesExtend.filter((item) => item.checked === true)
-  const totalBuyCount = itemChecked.reduce((total, number) => total + number.price * number.buy_count, 0)
-  const totalSalePrice = itemChecked.reduce(
-    (total, number) => total + number.price_before_discount * number.buy_count,
-    0
+  const itemChecked = useMemo(() => purchasesExtend.filter((item) => item.checked === true), [purchasesExtend])
+  const totalBuyCount = useMemo(
+    () => itemChecked.reduce((total, number) => total + number.price * number.buy_count, 0),
+    [itemChecked]
+  )
+  const totalSalePrice = useMemo(
+    () => itemChecked.reduce((total, number) => total + number.price_before_discount * number.buy_count, 0),
+    [itemChecked]
   )
   const handleRemove = (id: string) => () => deleteMutation.mutate([id])
-  const handleRemoveall = () => deleteMutation.mutate(itemChecked.map((item) => item._id))
+  const handleRemoveAll = () => deleteMutation.mutate(itemChecked.map((item) => item._id))
 
-  const ma = itemChecked.map((item) =>
-    omit({ ...item, product_id: item.product._id, buy_count: item.buy_count }, [
-      'checked',
-      'disible',
-      '_id',
-      'price',
-      'price_before_discount',
-      'status',
-      'user',
-      'createdAt',
-      'updatedAt'
-    ])
+  const ma = useMemo(
+    () =>
+      itemChecked.map((item) =>
+        omit({ ...item, product_id: item.product._id, buy_count: item.buy_count }, [
+          'checked',
+          'disible',
+          '_id',
+          'price',
+          'price_before_discount',
+          'status',
+          'user',
+          'createdAt',
+          'updatedAt'
+        ])
+      ),
+    [itemChecked]
   )
 
   const handleBuyCount = () => {
     if (itemChecked.length > 0) {
-      mutatioBuyPurchase.mutate(ma as [])
+      mutationBuyPurchase.mutate(ma as [])
     }
   }
 
   useEffect(() => {
     setPurchasesExtend((pre) => {
-      const extensPurchaseObj = keyBy(pre, '_id')
+      const extendPurchaseObj = keyBy(pre, '_id')
       return (
         purchasesInCart?.map((item) => {
           const stateBuyNowAll = stateBuyNow === item._id
 
           return {
             ...item,
-            checked: stateBuyNowAll || Boolean(extensPurchaseObj[item._id]?.checked),
-            disible: false
+            checked: stateBuyNowAll || Boolean(extendPurchaseObj[item._id]?.checked),
+            disable: false
           }
         }) || []
       )
     })
-  }, [purchasesInCart, stateBuyNow])
+  }, [stateBuyNow, purchasesInCart])
 
   useEffect(() => {
     return () => {
@@ -162,8 +170,8 @@ export default function Cart() {
             <div className='flex w-[31%] items-center'>
               <div className='w-[10%]'>
                 <input
-                  onChange={changehandlecheckedall}
-                  checked={handlecheckedall}
+                  onChange={changeHandleCheckedAll}
+                  checked={handleCheckedAll}
                   className='h-[18px] w-[18px] rounded-md  accent-orange'
                   type='checkbox'
                 />
@@ -198,18 +206,18 @@ export default function Cart() {
             </div>
             <div className='flex w-7/12 items-center justify-around text-center text-sm text-[#888888]'>
               <div className='flex w-3/12 items-center justify-center'>
-                <p className='text-sm line-through'>₫{fomatMoney(item.price_before_discount)}</p>
-                <span className='ml-2 text-sm text-black'>₫{fomatMoney(item.price)}</span>
+                <p className='text-sm line-through'>₫{formatMoney(item.price_before_discount)}</p>
+                <span className='ml-2 text-sm text-black'>₫{formatMoney(item.price)}</span>
               </div>
               <div className='flex w-3/12 justify-center'>
                 <QuantityController
                   value={item.buy_count}
                   max={item.product.quantity}
-                  onAddNumber={(value: number) => handleupdatecnount(item._id, value, value <= item.product.quantity)}
-                  onMinusone={(value: number) => handleupdatecnount(item._id, value, value >= 1)}
-                  onInputchange={handleOnchagen(item._id)}
-                  onForcos={(value: number) =>
-                    handleupdatecnount(
+                  onAddNumber={(value: number) => handleUpdateCount(item._id, value, value <= item.product.quantity)}
+                  oneMinusOne={(value: number) => handleUpdateCount(item._id, value, value >= 1)}
+                  onInputChange={handleOnChange(item._id)}
+                  onFocusOne={(value: number) =>
+                    handleUpdateCount(
                       item._id,
                       value,
                       value >= 1 &&
@@ -217,10 +225,10 @@ export default function Cart() {
                         value !== (purchasesInCart as purchasesExtendItem[])[index].buy_count
                     )
                   }
-                  disabled={item.disible}
+                  disabled={item.disable}
                 />
               </div>
-              <div className='w-3/12 text-sm text-[#EE4D2D]'>₫{fomatMoney(item.price * item.buy_count)}</div>
+              <div className='w-3/12 text-sm text-[#EE4D2D]'>₫{formatMoney(item.price * item.buy_count)}</div>
               <button onClick={handleRemove(item._id)} className='w-3/12	 text-sm text-black'>
                 xoa
               </button>
@@ -232,20 +240,20 @@ export default function Cart() {
         <div className='m-auto flex w-[95%] items-center justify-between bg-white '>
           <div className='flex w-[31%] items-center justify-between'>
             <input
-              checked={handlecheckedall}
-              onChange={changehandlecheckedall}
+              checked={handleCheckedAll}
+              onChange={changeHandleCheckedAll}
               className='h-[18px] w-[18px] rounded-md  accent-orange'
               type='checkbox'
             />
             <p>Chọn Tất Cả ({purchasesInCart?.length})</p>
-            <button onClick={handleRemoveall}>xoa</button>
+            <button onClick={handleRemoveAll}>xoa</button>
           </div>
 
           <div className='flex w-6/12 items-center justify-between'>
             <div>
               <div className='flex items-center'>
                 <p>Tổng thanh toán (0 Sản phẩm):</p>
-                <span className='text-2xl	text-orange'>₫{fomatMoney(totalBuyCount)}</span>
+                <span className='text-2xl	text-orange'>₫{formatMoney(totalBuyCount)}</span>
               </div>
               <div className='flex items-center justify-end'>
                 <div className='flex w-5/12 items-center justify-between'>

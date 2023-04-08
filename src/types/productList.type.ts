@@ -18,7 +18,7 @@ export interface Product {
   createdAt: string
   updatedAt: string
 }
-export interface Productconfig {
+export interface ProductConfig {
   page?: number | string
   limit?: number | string
   order?: 'desc' | 'asc'

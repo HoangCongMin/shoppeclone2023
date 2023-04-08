@@ -9,23 +9,23 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import Input from '../../components/Input/Input'
 import { RegisterApi, LoginApi } from '../../apis/auth.api'
 import { useMutation } from '@tanstack/react-query'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 import { axiosError } from '../../utils/util'
 import { resPonseApi } from '../../types/utils.type'
-import { mycreateContext } from '../../context/context'
+import { myCreateContext } from '../../context/context'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
 import Path from '../../constants/path'
 
 type FromData = Pick<Schema, 'email' | 'password' | 'confirm_password'>
-const loginschema = schema.pick(['email', 'password'])
-const registerschema = schema.pick(['email', 'password', 'confirm_password'])
+const logInSchema = schema.pick(['email', 'password'])
+const registerSchema = schema.pick(['email', 'password', 'confirm_password'])
 
 export default function Login() {
   const Navigate = useNavigate()
-  const { setLoginAndRegister, isRegister0k, setisRegister0k } = useContext(mycreateContext)
+  const { setLoginAndRegister, isRegister0k, setIsRegister0k } = useContext(myCreateContext)
   // const [registerItem, setRegisterItem] = useState(false)
-  const dynamicLogin = isRegister0k ? registerschema : loginschema
+  const dynamicLogin = isRegister0k ? registerSchema : logInSchema
   const {
     register,
     handleSubmit,
@@ -35,7 +35,7 @@ export default function Login() {
   } = useForm<FromData>({ resolver: yupResolver(dynamicLogin) })
 
   const handleRegister = () => {
-    setisRegister0k(!isRegister0k)
+    setIsRegister0k(!isRegister0k)
   }
   // const Rules=getRules(getValues)
 
@@ -54,12 +54,12 @@ export default function Login() {
           // sử lý lỗi ép kiểu axiosError
           // console.log(errors)
           if (axiosError<resPonseApi<Omit<FromData, 'confirm_password'>>>(errors) && errors.response?.status === 422) {
-            const fromerror = errors.response.data.data
-            if (fromerror) {
-              Object.keys(fromerror).forEach((key) =>
+            const fromError = errors.response.data.data
+            if (fromError) {
+              Object.keys(fromError).forEach((key) =>
                 setError(key as keyof Omit<FromData, 'confirm_password'>, {
                   type: 'server',
-                  message: fromerror[key as keyof Omit<FromData, 'confirm_password'>]
+                  message: fromError[key as keyof Omit<FromData, 'confirm_password'>]
                 })
               )
             }
@@ -80,12 +80,12 @@ export default function Login() {
           // sử lý lỗi ép kiểu axiosError
 
           if (axiosError<resPonseApi<FromData>>(errors) && errors.response?.status === 422) {
-            const fromerror = errors.response.data.data
-            if (fromerror) {
-              Object.keys(fromerror).forEach((key) =>
+            const fromError = errors.response.data.data
+            if (fromError) {
+              Object.keys(fromError).forEach((key) =>
                 setError(key as keyof FromData, {
                   type: 'server',
-                  message: fromerror[key as keyof FromData]
+                  message: fromError[key as keyof FromData]
                 })
               )
             }

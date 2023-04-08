@@ -3,21 +3,21 @@ import { getProductDetails, getProductList } from '../../apis/product.api'
 import { useParams } from 'react-router-dom'
 import Rating from '../../components/Rating'
 import { AiOutlineQuestionCircle } from 'react-icons/ai'
-import { fomatMoney, saleUtil, allAPIid } from '../../utils/util'
+import { formatMoney, saleUtil, allAPIid } from '../../utils/util'
 import { BsCartPlus } from 'react-icons/bs'
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Product, Productconfig } from '../../types/productList.type'
+import { Product, ProductConfig } from '../../types/productList.type'
 import ProductLists from '../Product/component.Product/ProductList'
 import QuantityController from '../../components/QuantityController'
 import { AddPurchases } from '../../apis/purchases.api'
 import purchases from '../../constants/purchases'
-import { Purchasesstatusall } from '../../types/purchases.type'
+import { purchaseStatusAll } from '../../types/purchases.type'
 import { useNavigate } from 'react-router-dom'
 import Path from '../../constants/path'
 
 export default function ProductDetails() {
-  const { id: idprall } = useParams()
+  const { id: idProAll } = useParams()
   const [buyCount, setBuyCount] = useState<number>(1)
   const navigate = useNavigate()
 
@@ -38,17 +38,17 @@ export default function ProductDetails() {
     navigate(Path.cart, { state: { purchaseId: purchase?._id } })
   }
 
-  const id = allAPIid(idprall as string)
+  const id = allAPIid(idProAll as string)
   const { data } = useQuery({
     queryKey: ['ProductDetails', id],
     queryFn: () => getProductDetails(id as string)
   })
-  const ProductDetailsall = data?.data.data
+  const ProductDetailsAll = data?.data.data
   const [currentIndexImg, setCurrentIndexImg] = useState([0, 5])
 
-  const curentImage = useMemo(
-    () => (ProductDetailsall ? ProductDetailsall.images.slice(...currentIndexImg) : []),
-    [ProductDetailsall, currentIndexImg]
+  const currentImage = useMemo(
+    () => (ProductDetailsAll ? ProductDetailsAll.images.slice(...currentIndexImg) : []),
+    [ProductDetailsAll, currentIndexImg]
   )
 
   const queryClient = useQueryClient()
@@ -59,12 +59,12 @@ export default function ProductDetails() {
 
       {
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['ListItem', { status: purchases.incart as Purchasesstatusall }] })
+          queryClient.invalidateQueries({ queryKey: ['ListItem', { status: purchases.inCart as purchaseStatusAll }] })
         }
       }
     )
   }
-  const handleBuycont = (value: number) => setBuyCount(value)
+  const handleBuyCount = (value: number) => setBuyCount(value) 
   const imageRef = useRef<HTMLImageElement>(null)
 
   const [imageItem, setImageItem] = useState('')
@@ -72,7 +72,7 @@ export default function ProductDetails() {
   const handleHover = (item: string) => setImageItem(item)
 
   const next = () => {
-    if (currentIndexImg[1] < (ProductDetailsall as Product)?.images.length) {
+    if (currentIndexImg[1] < (ProductDetailsAll as Product)?.images.length) {
       setCurrentIndexImg((pre) => [pre[0] + 1, pre[1] + 1])
     }
   }
@@ -82,9 +82,9 @@ export default function ProductDetails() {
     }
   }
 
-  const queryConfig: Productconfig = { limit: '20', page: '1', category: data?.data.data?.category._id }
+  const queryConfig: ProductConfig = { limit: '20', page: '1', category: data?.data.data?.category._id }
 
-  const { data: Productlistall } = useQuery({
+  const { data: productListAll } = useQuery({
     queryKey: ['products', queryConfig],
     queryFn: () => {
       return getProductList(queryConfig)
@@ -92,19 +92,19 @@ export default function ProductDetails() {
   })
 
   useEffect(() => {
-    if (ProductDetailsall && ProductDetailsall.images.length > 0) {
-      setImageItem(ProductDetailsall.images[0])
+    if (ProductDetailsAll && ProductDetailsAll.images.length > 0) {
+      setImageItem(ProductDetailsAll.images[0])
     }
-  }, [ProductDetailsall])
+  }, [ProductDetailsAll])
 
   if (!data?.data.data) {
     return null
   }
 
-  const handleononMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const imagesall = imageRef.current as HTMLImageElement
+  const handleOnMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const imagesAll = imageRef.current as HTMLImageElement
     const rec = e.currentTarget.getBoundingClientRect()
-    const { naturalHeight, naturalWidth } = imagesall
+    const { naturalHeight, naturalWidth } = imagesAll
     // cach 1 lay offsetX offsetY
     // const { offsetX, offsetY } = e.nativeEvent
     // cach 2 khong lay duoc  offsetX offsetY
@@ -113,13 +113,13 @@ export default function ProductDetails() {
 
     const top = offsetY * (1 - naturalHeight / rec.height)
     const left = offsetX * (1 - naturalWidth / rec.width)
-    imagesall.style.height = naturalHeight + 'px'
-    imagesall.style.width = naturalWidth + 'px'
-    imagesall.style.top = top + 'px'
-    imagesall.style.left = left + 'px'
+    imagesAll.style.height = naturalHeight + 'px'
+    imagesAll.style.width = naturalWidth + 'px'
+    imagesAll.style.top = top + 'px'
+    imagesAll.style.left = left + 'px'
   }
 
-  const handleonMouseLeave = () => {
+  const handleOnMouseLeave = () => {
     imageRef.current?.removeAttribute('style')
   }
 
@@ -130,8 +130,8 @@ export default function ProductDetails() {
           <div className=' m-auto w-[95%]'>
             <div
               className='relative overflow-hidden pt-[100%]	'
-              onMouseMove={handleononMouseMove}
-              onMouseLeave={handleonMouseLeave}
+              onMouseMove={handleOnMouseMove}
+              onMouseLeave={handleOnMouseLeave}
             >
               <img
                 className='pointer-events-none absolute top-0 left-0 h-full w-full bg-white object-cover'
@@ -144,12 +144,12 @@ export default function ProductDetails() {
               <button onClick={prev} className='absolute left-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 '>
                 <MdKeyboardArrowLeft className='text-[25px] text-white 	' />
               </button>
-              {curentImage.map((item) => {
-                const isAtive = imageItem === item
+              {currentImage.map((item) => {
+                const isActive = imageItem === item
                 return (
                   <div key={item} className='relative' onMouseEnter={() => handleHover(item)}>
                     <img className='h-full w-full' src={item} alt='' />
-                    {isAtive && <div className='absolute inset-0 border-2 border-[#ee4d2d]' />}
+                    {isActive && <div className='absolute inset-0 border-2 border-[#ee4d2d]' />}
                   </div>
                 )
               })}
@@ -185,13 +185,13 @@ export default function ProductDetails() {
             </div>
             <div className=' mt-3 w-full bg-[#fafafa]'>
               <div className='m-auto flex h-16 w-[95%]	 items-center'>
-                <div className='text-base text-[#929292] line-through'>{`₫${fomatMoney(
+                <div className='text-base text-[#929292] line-through'>{`₫${formatMoney(
                   data.data.data.price_before_discount
                 )}`}</div>
-                <div className='ml-3 text-3xl text-[#ee4d2d]	'>{`₫${fomatMoney(data.data.data.price)}`}</div>
+                <div className='ml-3 text-3xl text-[#ee4d2d]	'>{`₫${formatMoney(data.data.data.price)}`}</div>
                 <div className='ml-3 rounded bg-[#ee4d2d] px-1	py-0.5	text-xs	font-semibold	text-white	'>{`${saleUtil(
-                  data.data.data.price,
-                  data.data.data.price_before_discount
+                  data.data.data.price_before_discount,
+                  data.data.data.price
                 )} giảm`}</div>
               </div>
             </div>
@@ -199,10 +199,10 @@ export default function ProductDetails() {
               <div className='w-[16%] text-sm text-[#757575]'>Số lượng</div>
 
               <QuantityController
-                onInputchange={handleBuycont}
-                onAddNumber={handleBuycont}
-                onMinusone={handleBuycont}
-                max={ProductDetailsall?.quantity}
+                onInputChange={handleBuyCount}
+                onAddNumber={handleBuyCount}
+                oneMinusOne={handleBuyCount}
+                max={ProductDetailsAll?.quantity}
               />
               <div className='ml-4 text-sm text-[#757575]'>{`${data.data.data.quantity} sản phẩm có sẵn`}</div>
             </div>
@@ -234,9 +234,9 @@ export default function ProductDetails() {
       </div>
       <div className='m-auto w-10/12 max-w-screen-2xl	'>
         <div className='mt-6 grid grid-cols-5 gap-2.5	'>
-          {Productlistall?.data.data?.products.map((item: Product) => (
+          {productListAll?.data.data?.products.map((item: Product) => (
             <div key={item._id}>
-              <ProductLists itemall={item} />
+              <ProductLists itemAll={item} />
             </div>
           ))}
         </div>

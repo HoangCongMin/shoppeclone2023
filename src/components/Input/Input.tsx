@@ -1,5 +1,6 @@
-import { InputHTMLAttributes } from 'react'
+import { InputHTMLAttributes, useState } from 'react'
 import { RegisterOptions, UseFormRegister } from 'react-hook-form'
+import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 
 interface inputProp extends InputHTMLAttributes<HTMLInputElement> {
   Rules?: RegisterOptions
@@ -7,7 +8,7 @@ interface inputProp extends InputHTMLAttributes<HTMLInputElement> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register?: UseFormRegister<any>
   classNameError?: string
-  classNamediv?: string
+  classNameDiv?: string
 }
 
 export default function Input({
@@ -17,14 +18,35 @@ export default function Input({
   register,
   name,
   classNameError,
-  classNamediv,
+  classNameDiv,
   ...rest
 }: inputProp) {
   const Inptregister = register && name ? register(name, Rules) : {}
+
+  const [eye, setEye] = useState(false)
+
+  const handleEye = () => {
+    setEye((pre) => !pre)
+  }
+
+  const handleType = () => {
+    if (rest.type === 'password') {
+      return eye ? 'text' : 'password'
+    }
+    return rest.type
+  }
   return (
-    <div className={classNamediv}>
-      <input className={className} {...Inptregister} {...rest} />
+    <div className={classNameDiv}>
+      <input className={className} {...Inptregister} {...rest} type={handleType()} />
       <div className={classNameError}>{errors}</div>
+      {rest.type === 'password' && eye && (
+        <AiFillEye onClick={handleEye} className='absolute right-1 top-3 text-orange' />
+      )}
+      {rest.type === 'password' && !eye && (
+        <AiFillEyeInvisible onClick={handleEye} className='absolute right-1 top-3 text-orange' />
+      )}
     </div>
   )
 }
+
+// className='absolute right-1 top-3 text-orange'

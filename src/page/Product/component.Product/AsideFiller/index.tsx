@@ -12,8 +12,9 @@ import { schema, Schema } from '../../../../utils/rule'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { NonUnderfile } from '../../../../types/utils.type'
 import Rateting from '../rateting'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 import InputV2 from '../../../../components/InputV2'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   dataCategories: categories[]
@@ -22,7 +23,7 @@ interface Props {
 
 type FormData = NonUnderfile<Pick<Schema, 'price_max' | 'price_min'>>
 
-const priceschema = schema.pick(['price_max', 'price_min'])
+const priceSchema = schema.pick(['price_max', 'price_min'])
 export default function AsideFiller({ dataCategories, queryConfig }: Props) {
   const {
     control,
@@ -34,7 +35,7 @@ export default function AsideFiller({ dataCategories, queryConfig }: Props) {
       price_max: '',
       price_min: ''
     },
-    resolver: yupResolver(priceschema)
+    resolver: yupResolver(priceSchema)
   })
 
   const Navigate = useNavigate()
@@ -56,12 +57,14 @@ export default function AsideFiller({ dataCategories, queryConfig }: Props) {
       search: createSearchParams(omit(queryConfig, ['price_max', 'price_min', 'rating_filter', 'category'])).toString()
     })
 
+  const { t } = useTranslation()
+
   return (
     <div className='w-[15.7%]'>
       <div className='mb-[10px] flex h-14 items-center border-b	'>
         <TfiMenuAlt />
         <Link className='ml-3 text-lg font-bold' to='/'>
-          Tất cả danh mục
+          {t('AsideFiller.All categories')}
         </Link>
       </div>
       <ul className='border-b	pb-5'>
@@ -92,7 +95,7 @@ export default function AsideFiller({ dataCategories, queryConfig }: Props) {
         ))}
       </ul>
       <div className='border-b	py-5'>
-        <h3 className='mb-[10px]	font-medium'>Khoảng Giá</h3>
+        <h3 className='mb-[10px]	font-medium'>{t('AsideFiller.price range')}</h3>
         <form className='mt-5 mb-2.5 flex items-center justify-between'>
           <Controller
             name='price_min'
@@ -100,9 +103,9 @@ export default function AsideFiller({ dataCategories, queryConfig }: Props) {
             render={({ field }) => (
               <InputNumber
                 className='h-8 w-full rounded border-[1px]	border-solid border-slate-300	px-2 outline-none'
-                classNamediv='w-[43%]'
+                classNameDiv='w-[43%]'
                 type='text'
-                placeholder='₫ TỪ'
+                placeholder={`₫ ${t('AsideFiller.from')}`}
                 onChange={(e) => field.onChange(e)}
                 value={field.value}
                 ref={field.ref}
@@ -130,9 +133,9 @@ export default function AsideFiller({ dataCategories, queryConfig }: Props) {
             render={({ field }) => (
               <InputNumber
                 className='h-8 w-full rounded border-[1px]	border-solid border-slate-300	px-2 outline-none'
-                classNamediv='w-[43%]'
+                classNameDiv='w-[43%]'
                 type='text'
-                placeholder='₫ ĐẾN'
+                placeholder={`₫ ${t('AsideFiller.to')}`}
                 onChange={(e) => field.onChange(e)}
                 value={field.value}
                 ref={field.ref}
@@ -149,19 +152,18 @@ export default function AsideFiller({ dataCategories, queryConfig }: Props) {
           type='submit'
           className={'mt-5 mb-5 flex w-full  items-center justify-center bg-orange pt-2 pb-2 text-white'}
         >
-          {' '}
-          Áp dụng{' '}
+          {t('AsideFiller.apply')}
         </Button>
       </div>
       <div className='	py-5'>
-        <h3 className='mb-2.5	text-[15px] font-medium	'>Theo Danh Mục</h3>
+        <h3 className='mb-2.5	text-[15px] font-medium	'>{t('AsideFiller.By Category')}</h3>
         <ul className=' w-4/5'>
           {Array(5)
             .fill(0)
             .map((_, index) => (
               <li key={index} className='flex items-center justify-between'>
                 <Rateting queryConfig={queryConfig} item={index} />
-                <div className='text-sm'>{index !== 0 && 'trở lên'}</div>
+                <div className='text-sm'>{index !== 0 && `${t('AsideFiller.Star up')}`}</div>
               </li>
             ))}
         </ul>
@@ -169,7 +171,7 @@ export default function AsideFiller({ dataCategories, queryConfig }: Props) {
           onClick={handleRemoveall}
           className={'mt-6 mb-5 flex w-full  items-center justify-center bg-orange pt-2 pb-2 text-white'}
         >
-          xoá tất cả
+          {t('AsideFiller.delete all')}
         </Button>
       </div>
     </div>

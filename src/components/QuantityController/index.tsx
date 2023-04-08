@@ -1,4 +1,4 @@
-import { rest } from 'lodash'
+import rest from 'lodash/rest'
 import React, { useState } from 'react'
 import { AiOutlineMinus } from 'react-icons/ai'
 import { GrFormAdd } from 'react-icons/gr'
@@ -6,18 +6,18 @@ import InputNumber, { inputProp } from '../InputNumber/InputNumBer'
 
 interface PropQuantityController extends inputProp {
   max?: number
-  onInputchange?: (valueItem: number) => void
+  onInputChange?: (valueItem: number) => void
   onAddNumber?: (valueItem: number) => void
-  onMinusone?: (valueItem: number) => void
-  onForcos?: (valueItem: number) => void
+  oneMinusOne?: (valueItem: number) => void
+  onFocusOne?: (valueItem: number) => void
 }
 
 export default function QuantityController({
   max,
-  onInputchange,
+  onInputChange,
   onAddNumber,
-  onMinusone,
-  onForcos,
+  oneMinusOne,
+  onFocusOne,
   value,
   ...rest
 }: PropQuantityController) {
@@ -28,36 +28,36 @@ export default function QuantityController({
     if (max !== undefined && _value > max) {
       _value = max
     }
-    onInputchange && onInputchange(_value)
+    onInputChange && onInputChange(_value)
     setValueQuantity(_value)
   }
 
-  const handleadd = () => {
-    let addvalue = valueQuantity + 1
-    if (max !== undefined && addvalue > max) {
-      addvalue = max
+  const handleAdd = () => {
+    let addValue = valueQuantity + 1
+    if (max !== undefined && addValue > max) {
+      addValue = max
     }
-    onAddNumber && onAddNumber(addvalue)
-    setValueQuantity(addvalue)
+    onAddNumber && onAddNumber(addValue)
+    setValueQuantity(addValue)
   }
 
-  const handleminusone = () => {
-    let minusone = valueQuantity - 1
-    if (minusone < 1) {
-      minusone = 1
+  const handleMinusOne = () => {
+    let minusOne = valueQuantity - 1
+    if (minusOne < 1) {
+      minusOne = 1
     }
-    onMinusone && onMinusone(minusone)
-    setValueQuantity(minusone)
+    oneMinusOne && oneMinusOne(minusOne)
+    setValueQuantity(minusOne)
   }
 
-  const handleonForcos = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+  const handleOnFocusOne = (e: React.FocusEvent<HTMLInputElement, Element>) => {
     const _value = Number(e.target.value)
-    onForcos && onForcos(_value)
+    onFocusOne && onFocusOne(_value)
   }
 
   return (
     <div className='flex '>
-      <button onClick={handleminusone} className='border-1 flex h-8 w-8 items-center justify-center border'>
+      <button onClick={handleMinusOne} className='border-1 flex h-8 w-8 items-center justify-center border'>
         <AiOutlineMinus />
       </button>
       <InputNumber
@@ -66,10 +66,10 @@ export default function QuantityController({
         type='text'
         value={value || valueQuantity}
         onChange={handleOnchange}
-        onBlur={handleonForcos}
+        onBlur={handleOnFocusOne}
         {...rest}
       />
-      <button onClick={handleadd} className='border-1 flex h-8 w-8 items-center justify-center border'>
+      <button onClick={handleAdd} className='border-1 flex h-8 w-8 items-center justify-center border'>
         <GrFormAdd />
       </button>
     </div>

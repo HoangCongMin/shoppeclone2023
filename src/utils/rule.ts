@@ -98,6 +98,28 @@ export const schema = yup.object({
   search: yup.string().required('ten san pham la bat buoc').trim()
 })
 
+export const userSchema = yup.object({
+  name: yup.string().max(160, 'toi da 160 ky tu'),
+  phone: yup.string().max(20, 'toi da 20 ky tu'),
+  address: yup.string().max(160, 'toi da 160 ky tu'),
+  date_of_birth: yup.date().max(new Date(), 'hay chon 1 ngay trong qua khu'),
+  avatar: yup.string().max(1000, 'toi da 1000 ky tu'),
+  password: schema.fields['password'] as yup.StringSchema<string | undefined, yup.AnyObject, undefined, ''>,
+  new_password: schema.fields['password'] as yup.StringSchema<string | undefined, yup.AnyObject, undefined, ''>,
+  confirm_password: yup
+    .string()
+    .required('password la bat buoc')
+    .min(5, 'do dai email tu 5 - 160')
+    .max(160, 'do dai email tu 5 - 160')
+    .oneOf([yup.ref('confirm_password')], 'nhap lai mk hop le') as yup.StringSchema<
+    string | undefined,
+    yup.AnyObject,
+    undefined,
+    ''
+  >
+})
+
 // kế thừa type của schema
+export type UserSchema = yup.InferType<typeof userSchema>
 
 export type Schema = yup.InferType<typeof schema>

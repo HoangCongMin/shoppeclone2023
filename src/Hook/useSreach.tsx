@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 import { useForm } from 'react-hook-form'
 import { schema, Schema } from '../utils/rule'
 import useQueryParam from './useQueryParam'
@@ -7,25 +7,25 @@ import { createSearchParams, useNavigate } from 'react-router-dom'
 import Path from '../constants/path'
 
 type FromData = Pick<Schema, 'search'>
-const schemaSreach = schema.pick(['search'])
+const schemaSearch = schema.pick(['search'])
 export default function useSreach() {
   const { handleSubmit, register } = useForm<FromData>({
     defaultValues: {
       search: ''
     },
-    resolver: yupResolver(schemaSreach)
+    resolver: yupResolver(schemaSearch)
   })
 
   const queryParam = useQueryParam()
   const navigate = useNavigate()
 
-  const handleSreach = handleSubmit((data) => {
-    const queryparamall = queryParam.order ? omit(queryParam, ['order', 'sort_by']) : queryParam
+  const handleSearch = handleSubmit((data) => {
+    const queryParams = queryParam.order ? omit(queryParam, ['order', 'sort_by']) : queryParam
 
     navigate({
       pathname: Path.Home,
-      search: createSearchParams({ ...queryparamall, name: data.search }).toString()
+      search: createSearchParams({ ...queryParams, name: data.search }).toString()
     })
   })
-  return { handleSreach, register }
+  return { handleSearch, register }
 }

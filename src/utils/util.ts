@@ -1,11 +1,11 @@
 import axios, { AxiosError } from 'axios'
-
+import AvatarDemo from '../assets/image/avatarDemo.jpg'
 // ép kiểu lỗi AxiosError
 export function axiosError<T>(error: unknown): error is AxiosError<T> {
   return axios.isAxiosError(error)
 }
 
-export function fomatMoney(number: number) {
+export function formatMoney(number: number) {
   return new Intl.NumberFormat('de-DE').format(number)
 }
 
@@ -32,4 +32,8 @@ export const getParamSeo = ({ name, id }: { name: string; id: string }) =>
 export const allAPIid = (nameid: string) => {
   const arr = nameid.split('-i-')
   return arr[arr.length - 1]
+}
+
+export const setImage = (value?: string) => {
+  return value ? `https://api-ecom.duthanhduoc.com/images/${value}` : AvatarDemo
 }

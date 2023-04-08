@@ -2,7 +2,7 @@ import { resPonseApi } from './utils.type'
 import { user } from './user.type'
 
 // chuyền dữ liệu vào resPonseApi
-export type Authrespon = resPonseApi<{
+export type AuthResponse = resPonseApi<{
   access_token: string
   expires: number
   refresh_token: string

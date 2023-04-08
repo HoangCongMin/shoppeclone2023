@@ -1,5 +1,4 @@
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
-// import { Product } from '../../types/productList.type'
 
 interface Prop {
   ratingItem: number

@@ -3,14 +3,14 @@ import { FloatingPortal, useFloating, offset, flip, shift } from '@floating-ui/r
 
 import React, { useRef, useState } from 'react'
 
-interface propchildren {
+interface propChildren {
   children: React.ReactNode
   consomer: React.ReactNode
 }
 
-export default function Popoper({ children, consomer }: propchildren) {
+export default function Popoper({ children, consomer }: propChildren) {
   const [open, setOpen] = useState(false)
-  const arowref = useRef<HTMLElement>(null)
+  const arrowLeaf = useRef<HTMLElement>(null)
 
   const { x, y, strategy, refs, middlewareData } = useFloating({
     middleware: [offset(10), flip(), shift()]

@@ -1,6 +1,9 @@
 const Path = {
   Home: '/',
-  Proflie: '/Proflie',
+  Profile: '/Profile',
+  ChangePassWord: '/Profile/ChangePassWord',
+  User: '/Profile/ProfileUser',
+  Oder: '/Profile/purchaseOrder',
   login: '/login',
   register: '/register',
   logout: '/logout',

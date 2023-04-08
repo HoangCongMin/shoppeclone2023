@@ -4,16 +4,17 @@ import SortProduct from './component.Product/SortProduct'
 import { useQuery } from '@tanstack/react-query'
 import { getProductList } from '../../apis/product.api'
 import useQueryParam from '../../Hook/useQueryParam'
-import { Product, Productconfig } from '../../types/productList.type'
+import { Product, ProductConfig } from '../../types/productList.type'
 import Paginate from '../../components/Paginate'
-import { omitBy, isUndefined } from 'lodash'
+import omitBy from 'lodash/omitBy'
+import isUndefined from 'lodash/isUndefined'
 import { getCategories } from '../../apis/categories.api'
 
 export type QueryConfig = {
-  [key in keyof Productconfig]: string
+  [key in keyof ProductConfig]: string
 }
 export default function Products() {
-  const queryParem: Productconfig = useQueryParam()
+  const queryParem: ProductConfig = useQueryParam()
   const queryConfig: QueryConfig = omitBy(
     {
       page: queryParem.page || '1',
@@ -32,7 +33,7 @@ export default function Products() {
   const { data } = useQuery({
     queryKey: ['Product', queryConfig],
     queryFn: () => {
-      return getProductList(queryConfig as Productconfig)
+      return getProductList(queryConfig as ProductConfig)
     },
     keepPreviousData: true
   })
@@ -52,7 +53,7 @@ export default function Products() {
             <div className='mt-6 grid grid-cols-5 gap-2.5	'>
               {data?.data.data?.products.map((item: Product) => (
                 <div key={item._id}>
-                  <ProductLists itemall={item} />
+                  <ProductLists itemAll={item} />
                 </div>
               ))}
             </div>

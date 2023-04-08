@@ -5,30 +5,33 @@ import { useContext, useRef } from 'react'
 import { useFloating, offset, flip, shift } from '@floating-ui/react'
 import { useQuery } from '@tanstack/react-query'
 import Popoper from '../popoper'
-import { mycreateContext } from '../../context/context'
+import { myCreateContext } from '../../context/context'
 import Path from '../../constants/path'
 
 import { GetPurchases } from '../../apis/purchases.api'
 import purchases from '../../constants/purchases'
-import { Purchasesstatusall } from '../../types/purchases.type'
-import { fomatMoney } from '../../utils/util'
+import { purchaseStatusAll } from '../../types/purchases.type'
+import { formatMoney } from '../../utils/util'
 import Header from '../Header'
 import Seacrh from '../Seacrh'
+import { useTranslation } from 'react-i18next'
 
 export default function NapBarMain() {
-  const { LoginAndRegister } = useContext(mycreateContext)
+  const { LoginAndRegister } = useContext(myCreateContext)
   const arowref = useRef<HTMLElement>(null)
   const { middlewareData } = useFloating({
     middleware: [offset(10), flip(), shift()]
   })
 
   const { data } = useQuery({
-    queryKey: ['ListItem', { status: purchases.incart as Purchasesstatusall }],
-    queryFn: () => GetPurchases({ status: purchases.incart as Purchasesstatusall }),
+    queryKey: ['ListItem', { status: purchases.inCart as purchaseStatusAll }],
+    queryFn: () => GetPurchases({ status: purchases.inCart as purchaseStatusAll }),
     enabled: LoginAndRegister
   })
 
   const itemDisplay = 5
+
+  const { t } = useTranslation()
   return (
     <div className='w-full bg-orange'>
       <Header />
@@ -45,14 +48,14 @@ export default function NapBarMain() {
         <div className='w-9/12	'>
           <Seacrh classNameBorder='px-1	py-1' />
           <ul className='flex w-9/12 justify-between pt-1 pb-1 text-xs text-white'>
-            <li>dép</li>
-            <li>áo khoác</li>
-            <li>áo croptop</li>
-            <li>túi xách nữ</li>
-            <li>ốp iphone</li>
-            <li>áo phông</li>
-            <li>tai nghe blutooth</li>
-            <li>váy</li>
+            <li>{t('AsideFiller.sandal')}</li>
+            <li>{t('AsideFiller.jacket')}</li>
+            <li>{t('AsideFiller.crop-top shirt')}</li>
+            <li>{t('AsideFiller.womens handbags')}</li>
+            <li>{t('AsideFiller.iphone case')}</li>
+            <li>{t('AsideFiller.T-shirt')}</li>
+            <li>{t('AsideFiller.bluetooth headset')}</li>
+            <li>{t('AsideFiller.dress')}</li>
           </ul>
         </div>
         <div className='flex	 w-40 flex-col items-center justify-center text-white'>
@@ -65,7 +68,7 @@ export default function NapBarMain() {
                   style={{ left: middlewareData.arrow?.x, top: middlewareData.arrow?.y }}
                 />
                 <div className='m-auto w-[95%] py-3'>
-                  <h1 className='text-sm text-[#929292]'>Sản Phẩm Mới Thêm </h1>
+                  <h1 className='text-sm text-[#929292]'>{t('AsideFiller.New Products Added')} </h1>
                   <div className='pt-1'>
                     {data?.data.data?.slice(0, itemDisplay).map((item) => (
                       <div key={item.product._id} className='mt-4 flex items-center justify-between'>
@@ -76,7 +79,7 @@ export default function NapBarMain() {
                         />
 
                         <h3 className='w-[50%]	text-sm	font-medium line-clamp-1'>{item.product.name}</h3>
-                        <p className='w-[20%] text-sm text-orange'>₫{fomatMoney(item.price)}</p>
+                        <p className='w-[20%] text-sm text-orange'>₫{formatMoney(item.price)}</p>
                       </div>
                     ))}
                   </div>
@@ -85,14 +88,14 @@ export default function NapBarMain() {
                       {(data?.data.data?.length as number) > itemDisplay ? (
                         <div className='flex'>
                           <p>{(data?.data.data?.length as number) - itemDisplay} </p>
-                          <span className='ml-1'>Thêm vào giảo hàng</span>
+                          <span className='ml-1'>{t('AsideFiller.Add to Sales')}</span>
                         </div>
                       ) : (
                         ''
                       )}
                     </div>
                     <button className='-text-sm w-4/12 rounded-sm bg-orange py-2 text-white'>
-                      <Link to={Path.cart}>Xem giỏ hàng</Link>
+                      <Link to={Path.cart}>{t('AsideFiller.View cart')}</Link>
                     </button>
                   </div>
                 </div>
