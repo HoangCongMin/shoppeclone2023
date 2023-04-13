@@ -25,8 +25,8 @@ export class Http {
       timeout: 5000,
       headers: {
         'Content-Type': 'application/json',
-        'expire-access-token': 10,
-        'expire-refresh-token': 600
+        // 'expire-access-token': 10,
+        // 'expire-refresh-token': 600
       }
     })
     this.instance.interceptors.request.use(

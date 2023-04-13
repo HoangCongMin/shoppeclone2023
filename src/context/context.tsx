@@ -15,7 +15,19 @@ export interface AppContextInterface {
   reset: () => void
 }
 
-const initialAccess_token: AppContextInterface = {
+// const initialAccess_token: AppContextInterface = {
+//   LoginAndRegister: Boolean(getLocalStorage()),
+//   setLoginAndRegister: () => null,
+//   isRegister0k: false,
+//   setIsRegister0k: () => null,
+//   profileUser: getProfile(),
+//   setProfileUser: () => null,
+//   purchasesExtend: [],
+//   setPurchasesExtend: () => null,
+//   reset: () => null
+// }
+
+export const getInitialAppContext: () => AppContextInterface = () => ({
   LoginAndRegister: Boolean(getLocalStorage()),
   setLoginAndRegister: () => null,
   isRegister0k: false,
@@ -25,15 +37,23 @@ const initialAccess_token: AppContextInterface = {
   purchasesExtend: [],
   setPurchasesExtend: () => null,
   reset: () => null
-}
+})
+
+const initialAccess_token = getInitialAppContext()
 
 export const myCreateContext = createContext<AppContextInterface>(initialAccess_token)
 
-export const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [LoginAndRegister, setLoginAndRegister] = useState<boolean>(initialAccess_token.LoginAndRegister)
-  const [isRegister0k, setIsRegister0k] = useState<boolean>(initialAccess_token.isRegister0k)
-  const [profileUser, setProfileUser] = useState<user | null>(initialAccess_token.profileUser)
-  const [purchasesExtend, setPurchasesExtend] = useState<purchasesExtendItem[]>(initialAccess_token.purchasesExtend)
+export const AppContextProvider = ({
+  children,
+  defaultValue = initialAccess_token
+}: {
+  children: React.ReactNode
+  defaultValue?: AppContextInterface
+}) => {
+  const [LoginAndRegister, setLoginAndRegister] = useState<boolean>(defaultValue.LoginAndRegister)
+  const [isRegister0k, setIsRegister0k] = useState<boolean>(defaultValue.isRegister0k)
+  const [profileUser, setProfileUser] = useState<user | null>(defaultValue.profileUser)
+  const [purchasesExtend, setPurchasesExtend] = useState<purchasesExtendItem[]>(defaultValue.purchasesExtend)
   const reset = () => {
     setIsRegister0k(false)
     setProfileUser(null)

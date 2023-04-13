@@ -2,6 +2,7 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import { visualizer } from 'rollup-plugin-visualizer'
+import Path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,6 +14,12 @@ export default defineConfig({
     devSourcemap: true
   },
   test: {
-    environment: 'jsdom'
+    environment: 'jsdom',
+    setupFiles: Path.resolve(__dirname, './vitest.setup.js')
+  },
+  resolve: {
+    alias: {
+      src: Path.resolve(__dirname, './src')
+    }
   }
 })

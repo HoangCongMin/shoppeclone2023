@@ -4,7 +4,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useContext, useEffect } from 'react'
 import { localStorageClearContext } from './utils/auth'
 import { myCreateContext } from './context/context'
-
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import ErrorBoundary from './components/ErrorBoundary'
 function App() {
   const useRouter = element()
   const { reset } = useContext(myCreateContext)
@@ -16,7 +17,11 @@ function App() {
   }, [reset])
   return (
     <div className='App'>
-      {useRouter} <ToastContainer />
+      <ErrorBoundary>
+        {useRouter} <ToastContainer />
+      </ErrorBoundary>
+
+      <ReactQueryDevtools initialIsOpen={false} />
     </div>
   )
 }

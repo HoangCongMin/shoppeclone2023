@@ -63,6 +63,7 @@ export default function AsideFiller({ dataCategories, queryConfig }: Props) {
     <div className='w-[15.7%]'>
       <div className='mb-[10px] flex h-14 items-center border-b	'>
         <TfiMenuAlt />
+
         <Link className='ml-3 text-lg font-bold' to='/'>
           {t('AsideFiller.All categories')}
         </Link>

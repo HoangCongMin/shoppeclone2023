@@ -9,6 +9,7 @@ import Paginate from '../../components/Paginate'
 import omitBy from 'lodash/omitBy'
 import isUndefined from 'lodash/isUndefined'
 import { getCategories } from '../../apis/categories.api'
+import { Helmet } from 'react-helmet'
 
 export type QueryConfig = {
   [key in keyof ProductConfig]: string
@@ -45,6 +46,9 @@ export default function Products() {
 
   return (
     <div className='w-full bg-zinc-100	'>
+      <Helmet>
+        <title>Product Item</title>
+      </Helmet>
       <div className=' m-auto flex w-[84.5%] max-w-screen-2xl justify-between	'>
         <AsideFiller queryConfig={queryConfig} dataCategories={dataCategories?.data.data || []} />
         <div className='w-[82.4%]'>

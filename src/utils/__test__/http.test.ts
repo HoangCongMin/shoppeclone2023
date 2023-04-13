@@ -3,10 +3,9 @@ import { Http } from '../http'
 import { setLocalStorage, setLocalStorageReFreshToken } from '../../utils/auth'
 
 const access_token =
-  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmRlMDRjNmQ3YzYyMDM0MDg1Mjk3NyIsImVtYWlsIjoibWhAZ21haWwuY29tIiwicm9sZXMiOlsiVXNlciJdLCJjcmVhdGVkX2F0IjoiMjAyMy0wNC0wOFQxNDowOToyNi4zMzFaIiwiaWF0IjoxNjgwOTYyOTY2LCJleHAiOjE2ODE1Njc3NjZ9.uPoz-s6JGLXzZB-n0vwYMkJWudNNhpflifp9--ObHQc'
+  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmRlMDRjNmQ3YzYyMDM0MDg1Mjk3NyIsImVtYWlsIjoibWhAZ21haWwuY29tIiwicm9sZXMiOlsiVXNlciJdLCJjcmVhdGVkX2F0IjoiMjAyMy0wNC0wOFQxNjoyMzo0OC45NTNaIiwiaWF0IjoxNjgwOTcxMDI4LCJleHAiOjE2ODA5NzEwMjl9.Pte1MEkjepzR-gn3cI24ODp6bviGbTKZakMQsNTzSYQ'
 const refresh_token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmRlMDRjNmQ3YzYyMDM0MDg1Mjk3NyIsImVtYWlsIjoibWhAZ21haWwuY29tIiwicm9sZXMiOlsiVXNlciJdLCJjcmVhdGVkX2F0IjoiMjAyMy0wNC0wOFQxNDowOToyNi4zMzFaIiwiaWF0IjoxNjgwOTYyOTY2LCJleHAiOjE2ODk2MDI5NjZ9.XjssWVbNEo8tHbStKUafQwL4DmI1TgR3oyyrZlR-dJ0'
-
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmRlMDRjNmQ3YzYyMDM0MDg1Mjk3NyIsImVtYWlsIjoibWhAZ21haWwuY29tIiwicm9sZXMiOlsiVXNlciJdLCJjcmVhdGVkX2F0IjoiMjAyMy0wNC0wOFQxNjoyMzo0OC45NTNaIiwiaWF0IjoxNjgwOTcxMDI4LCJleHAiOjE2ODk2MTEwMjh9.qfsShaAnban7JJYpAdqp2PG6qwgpc65mEq9iBoNpLSA'
 describe('axios test', () => {
   let http = new Http().instance
   beforeEach(() => {
@@ -20,7 +19,6 @@ describe('axios test', () => {
   it('login is ok', async () => {
     await http.post('login', { email: 'mh@gmail.com', password: 'minh123456789' })
     const res = await http.get('me')
-    console.log(res)
 
     expect(res.status).toBe(200)
   })
@@ -30,7 +28,7 @@ describe('axios test', () => {
     setLocalStorageReFreshToken(refresh_token)
     const httpNew = new Http().instance
     const res = await httpNew.get('me')
-    console.log(res)
+    console.log(res.config.headers.authorization)
     expect(res.status).toBe(200)
   })
   it('logout is ok', async () => {

@@ -120,6 +120,7 @@ export default function ProfileUser() {
                   errors={errors.name?.message}
                   type='text'
                   className='h-full w-full  p-3	 outline-none'
+                  placeholder='Tên'
                   classNameDiv='h-10 w-[75%] rounded-sm border border-gray-300'
                 />
               </div>

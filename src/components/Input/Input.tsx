@@ -19,6 +19,7 @@ export default function Input({
   name,
   classNameError,
   classNameDiv,
+  placeholder,
   ...rest
 }: inputProp) {
   const Inptregister = register && name ? register(name, Rules) : {}
@@ -37,7 +38,7 @@ export default function Input({
   }
   return (
     <div className={classNameDiv}>
-      <input className={className} {...Inptregister} {...rest} type={handleType()} />
+      <input placeholder={placeholder} className={className} {...Inptregister} {...rest} type={handleType()} />
       <div className={classNameError}>{errors}</div>
       {rest.type === 'password' && eye && (
         <AiFillEye onClick={handleEye} className='absolute right-1 top-3 text-orange' />
@@ -48,5 +49,3 @@ export default function Input({
     </div>
   )
 }
-
-// className='absolute right-1 top-3 text-orange'

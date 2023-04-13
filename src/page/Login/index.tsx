@@ -16,6 +16,7 @@ import { myCreateContext } from '../../context/context'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
 import Path from '../../constants/path'
+import { Helmet } from 'react-helmet'
 
 type FromData = Pick<Schema, 'email' | 'password' | 'confirm_password'>
 const logInSchema = schema.pick(['email', 'password'])
@@ -110,8 +111,13 @@ export default function Login() {
   //  return null
   // }, [mutation.error])
 
+  const textValue = isRegister0k ? 'Bạn đã có tài khoản?' : 'Bạn mới biết đến Shopee?'
+
   return (
     <div className='w-full bg-orange'>
+      <Helmet>
+        <title>đăng nhập</title>
+      </Helmet>
       <div className='m-auto grid w-4/5 max-w-screen-2xl grid-cols-5 py-12 	'>
         <div className='col-span-2 col-start-4 my-2.5	bg-white '>
           <form onSubmit={handleClick} className='	m-auto w-4/5'>
@@ -176,7 +182,8 @@ export default function Login() {
               <div className='w-2/5 border'></div>
             </div>
             <div className='mb-4 text-center text-gray-400'>
-              Bạn mới biết đến Shopee?{' '}
+              {/* Bạn mới biết đến Shopee?{' '} */}
+              {textValue}
               <span onClick={handleRegister} className='text-orange'>
                 {' '}
                 {isRegister0k ? 'đăng nhập' : 'đăng ký'}

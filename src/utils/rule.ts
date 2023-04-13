@@ -75,8 +75,8 @@ export const schema = yup.object({
   password: yup
     .string()
     .required('password la bat buoc')
-    .min(5, 'do dai email tu 5 - 160')
-    .max(160, 'do dai email tu 5 - 160'),
+    .min(5, 'do dai password tu 5 - 160')
+    .max(160, 'do dai password tu 5 - 160'),
   confirm_password: yup
     .string()
     .required('password la bat buoc')

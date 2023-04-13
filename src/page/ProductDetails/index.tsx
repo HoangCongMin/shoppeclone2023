@@ -64,7 +64,7 @@ export default function ProductDetails() {
       }
     )
   }
-  const handleBuyCount = (value: number) => setBuyCount(value) 
+  const handleBuyCount = (value: number) => setBuyCount(value)
   const imageRef = useRef<HTMLImageElement>(null)
 
   const [imageItem, setImageItem] = useState('')
