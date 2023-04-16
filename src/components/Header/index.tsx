@@ -50,14 +50,14 @@ export default function Header() {
   const LanGuage = lanGuageAll[i18n.language as keyof typeof lanGuageAll]
   return (
     <div className='m-auto flex w-10/12 max-w-screen-2xl items-center justify-between pt-2 max-[1310px]:justify-center  '>
-      <div className='w-5/12 max-[1234px]:hidden'></div>
-      <div className='w-[35%] max-[1234px]:w-[auto] max-[600px]:w-full'>
+      <div className='w-5/12 max-[1310px]:hidden'></div>
+      <div className='w-[35%] max-[1310px]:w-[auto] max-[600px]:w-full'>
         <ul className='flex w-full justify-between text-[14px] text-white'>
-          <li className='flex items-center max-[434px]:hidden'>
+          <li className='flex items-center max-[459px]:hidden'>
             <FiBell />
             <p className='ml-1'> {t('AsideFiller.Notification')} </p>
           </li>
-          <li className='flex items-center max-[434px]:hidden'>
+          <li className='flex items-center max-[459px]:hidden'>
             <AiOutlineQuestionCircle /> <p className='ml-1'> {t('AsideFiller.Support')} </p>
           </li>
           <Popoper
