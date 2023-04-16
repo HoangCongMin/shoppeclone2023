@@ -1,6 +1,7 @@
 import { InputHTMLAttributes, useState } from 'react'
 import { RegisterOptions, UseFormRegister } from 'react-hook-form'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
+import classNames from 'classnames'
 
 interface inputProp extends InputHTMLAttributes<HTMLInputElement> {
   Rules?: RegisterOptions
@@ -9,6 +10,7 @@ interface inputProp extends InputHTMLAttributes<HTMLInputElement> {
   register?: UseFormRegister<any>
   classNameError?: string
   classNameDiv?: string
+  classNameLogin?: string
 }
 
 export default function Input({
@@ -20,6 +22,7 @@ export default function Input({
   classNameError,
   classNameDiv,
   placeholder,
+  classNameLogin,
   ...rest
 }: inputProp) {
   const Inptregister = register && name ? register(name, Rules) : {}
@@ -41,10 +44,16 @@ export default function Input({
       <input placeholder={placeholder} className={className} {...Inptregister} {...rest} type={handleType()} />
       <div className={classNameError}>{errors}</div>
       {rest.type === 'password' && eye && (
-        <AiFillEye onClick={handleEye} className='absolute right-1 top-3 text-orange' />
+        <AiFillEye
+          onClick={handleEye}
+          className={classNames(`absolute right-1 ${classNameLogin ? classNameLogin : 'top-3'} text-orange`)}
+        />
       )}
       {rest.type === 'password' && !eye && (
-        <AiFillEyeInvisible onClick={handleEye} className='absolute right-1 top-3 text-orange' />
+        <AiFillEyeInvisible
+          onClick={handleEye}
+          className={classNames(`absolute right-1 ${classNameLogin ? classNameLogin : 'top-3'} text-orange`)}
+        />
       )}
     </div>
   )

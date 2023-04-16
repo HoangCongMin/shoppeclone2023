@@ -10,6 +10,7 @@ import omit from 'lodash/omit'
 import keyBy from 'lodash/keyBy'
 import { useLocation } from 'react-router-dom'
 import { myCreateContext } from '../../context/context'
+import { useTranslation } from 'react-i18next'
 
 export interface purchasesExtendItem extends resPurchases {
   checked: boolean
@@ -17,6 +18,7 @@ export interface purchasesExtendItem extends resPurchases {
 }
 
 export default function Cart() {
+  const { t } = useTranslation('cart')
   const location = useLocation()
   const stateBuyNow = (location.state as { purchaseId: string } | null)?.purchaseId
 
@@ -163,11 +165,11 @@ export default function Cart() {
   }, [])
 
   return (
-    <div className='w-full bg-[#f4f4f5] py-5'>
+    <div className='w-full bg-[#f4f4f5] py-16'>
       <div className='m-auto w-10/12 max-w-screen-2xl bg-white shadow-sm '>
         <div className='flex h-14 items-center'>
           <div className='m-auto flex w-[95%] justify-between	'>
-            <div className='flex w-[31%] items-center'>
+            <div className='flex w-[31%] items-center max-[800px]:justify-between'>
               <div className='w-[10%]'>
                 <input
                   onChange={changeHandleCheckedAll}
@@ -176,22 +178,22 @@ export default function Cart() {
                   type='checkbox'
                 />
               </div>
-              <div className='ml-[4%] text-sm	'>Sản Phẩm</div>
+              <div className='ml-[4%] truncate	text-sm'>{t('Cart:cart.Product')}</div>
             </div>
             <div className='flex w-7/12 justify-around text-center text-sm text-[#888888]'>
-              <div className='w-3/12	'>Đơn Giá</div>
-              <div className='w-3/12	'>Số Lượng</div>
-              <div className='w-3/12	'>Số Tiền</div>
-              <div className='w-3/12	'>Thao Tác</div>
+              <div className='w-3/12 	truncate'>{t('Cart:cart.Unit price')}</div>
+              <div className='w-3/12	truncate'>{t('Cart:cart.Quantity')}</div>
+              <div className='w-3/12	truncate'>{t('Cart:cart.Amount of money')}</div>
+              <div className='w-3/12	truncate'>{t('Cart:cart.Operation')}</div>
             </div>
           </div>
         </div>
       </div>
       {purchasesExtend?.map((item, index) => (
         <div className='m-auto mt-4  flex		w-10/12 max-w-screen-2xl items-center bg-white py-6' key={item._id}>
-          <div className='m-auto flex w-[95%] justify-between'>
-            <div className='flex w-[31%] items-center'>
-              <div className='w-[10%]'>
+          <div className='m-auto flex w-[95%]  justify-between max-[800px]:flex-col'>
+            <div className='flex w-[31%] items-center max-[800px]:w-[100%] '>
+              <div className='w-[10%] '>
                 <input
                   checked={item.checked}
                   onChange={handleCheckedItem(item._id)}
@@ -199,17 +201,19 @@ export default function Cart() {
                   type='checkbox'
                 />
               </div>
-              <div className='ml-[4%] flex items-center	text-sm'>
+              <div className='ml-[4%] flex items-center	text-sm max-[800px]:w-[60%]'>
                 <img className='h-20 w-20' src={item.product.image} alt='' />
                 <div className='ml-2 text-sm line-clamp-2'>{item.product.name}</div>
               </div>
             </div>
-            <div className='flex w-7/12 items-center justify-around text-center text-sm text-[#888888]'>
+            <div className='flex w-7/12 items-center justify-around text-center text-sm text-[#888888] max-[800px]:w-[100%] max-[800px]:mt-4 '>
               <div className='flex w-3/12 items-center justify-center'>
-                <p className='text-sm line-through'>₫{formatMoney(item.price_before_discount)}</p>
-                <span className='ml-2 text-sm text-black'>₫{formatMoney(item.price)}</span>
+                <p className='m-0 truncate text-sm	line-through max-[1100px]:hidden'>
+                  ₫{formatMoney(item.price_before_discount)}
+                </p>
+                <span className='ml-2 truncate text-sm text-black	'>₫{formatMoney(item.price)}</span>
               </div>
-              <div className='flex w-3/12 justify-center'>
+              <div className='flex w-3/12 justify-center truncate'>
                 <QuantityController
                   value={item.buy_count}
                   max={item.product.quantity}
@@ -228,36 +232,40 @@ export default function Cart() {
                   disabled={item.disable}
                 />
               </div>
-              <div className='w-3/12 text-sm text-[#EE4D2D]'>₫{formatMoney(item.price * item.buy_count)}</div>
+              <div className='w-3/12 truncate text-sm text-[#EE4D2D]'>₫{formatMoney(item.price * item.buy_count)}</div>
               <button onClick={handleRemove(item._id)} className='w-3/12	 text-sm text-black'>
-                xoa
+                {t('Cart:cart.Delete')}
               </button>
             </div>
           </div>
         </div>
       ))}
       <div className='sticky bottom-0 z-10		m-auto mt-4 flex w-10/12 max-w-screen-2xl items-center border border-gray-100 bg-white py-6 shadow'>
-        <div className='m-auto flex w-[95%] items-center justify-between bg-white '>
-          <div className='flex w-[31%] items-center justify-between'>
+        <div className='m-auto flex w-[95%] items-center justify-between bg-white max-[800px]:flex-col'>
+          <div className='flex w-[31%] items-center justify-between max-[800px]:w-[100%]'>
             <input
               checked={handleCheckedAll}
               onChange={changeHandleCheckedAll}
               className='h-[18px] w-[18px] rounded-md  accent-orange'
               type='checkbox'
             />
-            <p>Chọn Tất Cả ({purchasesInCart?.length})</p>
-            <button onClick={handleRemoveAll}>xoa</button>
+            <p >
+              {t('Cart:cart.Select all')} ({purchasesInCart?.length})
+            </p>
+            <button onClick={handleRemoveAll}>{t('Cart:cart.Delete')}</button>
           </div>
 
-          <div className='flex w-6/12 items-center justify-between'>
+          <div className='flex w-6/12 items-center justify-between max-[800px]:w-[100%] max-[800px]:pt-4'>
             <div>
               <div className='flex items-center'>
-                <p>Tổng thanh toán (0 Sản phẩm):</p>
+                <p >
+                  {t('User:User.TotalPrice')} {itemChecked.length} {t('Cart:cart.Product')} :
+                </p>
                 <span className='text-2xl	text-orange'>₫{formatMoney(totalBuyCount)}</span>
               </div>
               <div className='flex items-center justify-end'>
-                <div className='flex w-5/12 items-center justify-between'>
-                  <p>Tiết kiệm</p>
+                <div className='flex items-center justify-between'>
+                  <p>{t('Cart:cart.Economize')}</p>
                   <span className='text-sm text-orange'>
                     ₫{formatNumberToSocialStyle(totalSalePrice - totalBuyCount)}
                   </span>
@@ -265,7 +273,7 @@ export default function Cart() {
               </div>
             </div>
             <button onClick={handleBuyCount} className='w-4/12 bg-orange py-2 font-light	text-white'>
-              Mua hàng
+              {t('Cart:cart.Purchase')}
             </button>
           </div>
         </div>

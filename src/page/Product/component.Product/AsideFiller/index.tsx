@@ -57,10 +57,10 @@ export default function AsideFiller({ dataCategories, queryConfig }: Props) {
       search: createSearchParams(omit(queryConfig, ['price_max', 'price_min', 'rating_filter', 'category'])).toString()
     })
 
-  const { t } = useTranslation()
+  const { t } = useTranslation('home')
 
   return (
-    <div className='w-[15.7%]'>
+    <div className='w-[15.7%] max-[1220px]:w-full'>
       <div className='mb-[10px] flex h-14 items-center border-b	'>
         <TfiMenuAlt />
 
@@ -158,13 +158,13 @@ export default function AsideFiller({ dataCategories, queryConfig }: Props) {
       </div>
       <div className='	py-5'>
         <h3 className='mb-2.5	text-[15px] font-medium	'>{t('AsideFiller.By Category')}</h3>
-        <ul className=' w-4/5'>
+        <ul className=' w-4/5 max-[1220px]:w-3/5'>
           {Array(5)
             .fill(0)
             .map((_, index) => (
-              <li key={index} className='flex items-center justify-between'>
+              <li key={index} className='flex items-center justify-between max-[1220px]:justify-start'>
                 <Rateting queryConfig={queryConfig} item={index} />
-                <div className='text-sm'>{index !== 0 && `${t('AsideFiller.Star up')}`}</div>
+                <div className='text-sm max-[1220px]:ml-5'>{index !== 0 && `${t('AsideFiller.Star up')}`}</div>
               </li>
             ))}
         </ul>

@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import omit from 'lodash/omit'
 import { axiosError } from '../../../../utils/util'
 import { resPonseApi } from '../../../../types/utils.type'
+import { useTranslation } from 'react-i18next'
 
 type FromData = Pick<UserSchema, 'confirm_password' | 'password' | 'new_password'>
 const DataUserSchema = userSchema.pick(['confirm_password', 'password', 'new_password'])
@@ -48,23 +49,27 @@ export default function ChangePassWord() {
     }
   })
 
+  const { t } = useTranslation('user')
+
   return (
-    <div className='w-full bg-white'>
+    <div className='w-full bg-white pb-6'>
       <div className='m-auto w-[95%]'>
         <div className='border-b border-slate-200 py-5'>
-          <h1 className='text-lg font-medium	text-[#333]	'>Thêm mật khẩu</h1>
+          <h1 className='text-lg font-medium	text-[#333]	'>{t('User:User.Add password')}</h1>
           <div className='text-sm text-[#555]'>
-            Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho người khác
+            {t('User:User.For account security, please do not share your password with others')}
           </div>
         </div>
         <div className='mt-5 flex items-center'>
           <form className='w-[80%]' onSubmit={handleChangePassWord}>
             <div className='relative m-auto mt-5 flex w-[70%] items-center justify-between'>
-              <div className='w-[25%] text-right text-sm text-[#757575]'>Mật khẩu mới</div>
+              <div className='w-[25%] text-right text-sm text-[#757575] max-[1000px]:hidden'>
+                {t('User:User.New password')}
+              </div>
               <Input
-                classNameDiv='w-[70%] h-10 rounded-sm border border-gray-300'
+                classNameDiv='w-[70%] h-10 rounded-sm border border-gray-300 max-[1000px]:w-full'
                 className='h-full w-full p-2 outline-none'
-                placeholder='Mật khẩu mới'
+                placeholder={`${t('User:User.New password')}`}
                 register={register}
                 name='new_password'
                 type={'password'}
@@ -72,11 +77,13 @@ export default function ChangePassWord() {
               />
             </div>
             <div className='relative m-auto mt-5 flex w-[70%] items-center justify-between'>
-              <div className='w-[25%] text-right text-sm text-[#757575]'>Xác nhận mật khẩu</div>
+              <div className='w-[25%] text-right text-sm text-[#757575] max-[1000px]:hidden'>
+                {t('User:User.Confirm password')}
+              </div>
               <Input
-                classNameDiv='w-[70%] h-10 rounded-sm border border-gray-300 '
+                classNameDiv='w-[70%] h-10 rounded-sm border border-gray-300 max-[1000px]:w-full '
                 className='h-full w-full p-2 outline-none'
-                placeholder='Xác nhận mật khẩu'
+                placeholder={`${t('User:User.Confirm password')}`}
                 register={register}
                 name='confirm_password'
                 type={'password'}
@@ -84,11 +91,13 @@ export default function ChangePassWord() {
               />
             </div>
             <div className='relative m-auto mt-5 flex w-[70%] items-center justify-between'>
-              <div className=' w-[25%] text-right text-sm text-[#757575]'>Mật khẩu cu</div>
+              <div className=' w-[25%] text-right text-sm text-[#757575] max-[1000px]:hidden'>
+                {t('User:User.old password')}
+              </div>
               <Input
-                classNameDiv='w-[70%] h-10 rounded-sm border border-gray-300'
+                classNameDiv='w-[70%] h-10 rounded-sm border border-gray-300 max-[1000px]:w-full'
                 className='h-full w-full p-2 outline-none'
-                placeholder='Mật khẩu cu'
+                placeholder={`${t('User:User.old password')}`}
                 register={register}
                 name='password'
                 type={'password'}
@@ -99,7 +108,7 @@ export default function ChangePassWord() {
               <div className='w-[25%]'></div>
               <div className='w-[70%]'>
                 <button type='submit' className='  h-10 w-24 cursor-pointer rounded  bg-orange text-sm text-[#fff]'>
-                  Xác nhận
+                  {t('User:User.Confirm')}
                 </button>
               </div>
             </div>

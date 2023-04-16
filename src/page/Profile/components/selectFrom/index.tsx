@@ -26,7 +26,7 @@ export default function SelectFrom({ onChange, value, errorMasage }: Props) {
   }
 
   return (
-    <div className='flex w-[75%] justify-between'>
+    <div className='flex w-[75%] justify-between max-[900px]:w-[100%]'>
       <div className='h-10 w-[32%] rounded-sm border border-gray-300'>
         <select name='date' onChange={handleChange} value={value?.getDate() || dateState.date} className='w-full'>
           <option disabled>Ngày</option>

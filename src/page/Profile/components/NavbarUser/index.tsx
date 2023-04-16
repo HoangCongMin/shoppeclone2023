@@ -7,9 +7,12 @@ import { useContext } from 'react'
 import { myCreateContext } from '../../../../context/context'
 import { setImage } from '../../../../utils/util'
 import classNames from 'classnames'
+import { useTranslation } from 'react-i18next'
 
 export default function NavbarUser() {
   const { profileUser } = useContext(myCreateContext)
+
+  const { t } = useTranslation('user')
 
   return (
     <div>
@@ -22,7 +25,7 @@ export default function NavbarUser() {
           <p className='mb-1 text-sm font-semibold text-[#333]	'>{profileUser?.name}</p>
           <Link className='flex items-center text-sm capitalize text-[#888]' to={Path.User}>
             <RiEditFill />
-            <span className='ml-2'>Sửa hồ sơ</span>
+            <span className='ml-2'>{t('User:User.Edit Profile')}</span>
           </Link>
         </div>
       </div>
@@ -32,21 +35,21 @@ export default function NavbarUser() {
           className={({ isActive }) => classNames(`mt-4 flex items-center ${isActive ? 'text-orange' : 'text-[#000]'}`)}
         >
           <CgProfile className='text-xl text-orange	' />
-          <span className='ml-2 text-sm	font-medium '>Tài khoản của tôi</span>
+          <span className='ml-2 text-sm	font-medium '>{t('User:User.My account')}</span>
         </NavLink>
         <NavLink
           to={Path.ChangePassWord}
           className={({ isActive }) => classNames(`mt-4 flex items-center ${isActive ? 'text-orange' : 'text-[#000]'}`)}
         >
           <RiLockPasswordFill className='text-xl text-orange	' />
-          <span className='ml-2 text-sm	font-medium'>Đổi mật khẩu</span>
+          <span className='ml-2 text-sm	font-medium'>{t('User:User.Change Password')}</span>
         </NavLink>
         <NavLink
           to={Path.Oder}
           className={({ isActive }) => classNames(`mt-4 flex items-center ${isActive ? 'text-orange' : 'text-[#000]'}`)}
         >
           <RiBillFill className=' text-xl text-orange	' />
-          <span className='ml-2 text-sm	font-medium '>Đơn Mua</span>
+          <span className='ml-2 text-sm	font-medium '>{t('User:User.Purchase Order')}</span>
         </NavLink>
       </div>
     </div>

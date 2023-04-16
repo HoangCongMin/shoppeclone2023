@@ -15,6 +15,7 @@ import purchases from '../../constants/purchases'
 import { purchaseStatusAll } from '../../types/purchases.type'
 import { useNavigate } from 'react-router-dom'
 import Path from '../../constants/path'
+import { useTranslation } from 'react-i18next'
 
 export default function ProductDetails() {
   const { id: idProAll } = useParams()
@@ -97,6 +98,9 @@ export default function ProductDetails() {
     }
   }, [ProductDetailsAll])
 
+  const { t } = useTranslation(['productDetail'])
+
+
   if (!data?.data.data) {
     return null
   }
@@ -124,8 +128,8 @@ export default function ProductDetails() {
   }
 
   return (
-    <div className='w-full bg-[#e5e7eb]'>
-      <div className='m-auto flex w-10/12 max-w-screen-2xl	 justify-between bg-white'>
+    <div className='w-full bg-[#e5e7eb] pt-11 pb-20'>
+      <div className='m-auto flex w-10/12 max-w-screen-2xl justify-between bg-white py-10'>
         <div className='w-6/12 pt-3'>
           <div className=' m-auto w-[95%]'>
             <div
@@ -178,7 +182,7 @@ export default function ProductDetails() {
                 <div className='h-6	border-r-[1px] border-solid border-gray-400'></div>
                 <div className='flex items-center'>
                   <p className='text-base	'>{data?.data.data?.sold}</p>
-                  <span className='ml-1 text-sm text-[#767676] '>Đã bán</span>
+                  <span className='ml-1 text-sm text-[#767676] '>{t('ProductDetail:ProductDetail.Sold')}</span>
                   <AiOutlineQuestionCircle className='ml-1 text-sm text-[#767676]	' />
                 </div>
               </div>
@@ -192,11 +196,11 @@ export default function ProductDetails() {
                 <div className='ml-3 rounded bg-[#ee4d2d] px-1	py-0.5	text-xs	font-semibold	text-white	'>{`${saleUtil(
                   data.data.data.price_before_discount,
                   data.data.data.price
-                )} giảm`}</div>
+                )} ${t('ProductDetail:ProductDetail.discount')}`}</div>
               </div>
             </div>
             <div className='mt-4 flex  w-full items-center'>
-              <div className='w-[16%] text-sm text-[#757575]'>Số lượng</div>
+              <div className='w-[16%] text-sm text-[#757575]'>{t('ProductDetail:ProductDetail.Quantity')}</div>
 
               <QuantityController
                 onInputChange={handleBuyCount}
@@ -204,23 +208,23 @@ export default function ProductDetails() {
                 oneMinusOne={handleBuyCount}
                 max={ProductDetailsAll?.quantity}
               />
-              <div className='ml-4 text-sm text-[#757575]'>{`${data.data.data.quantity} sản phẩm có sẵn`}</div>
+              <div className='ml-4 text-sm text-[#757575]'>{`${data.data.data.quantity} ${t('ProductDetail:ProductDetail.products available')}`}</div>
             </div>
             <div className='mt-7 flex w-full'>
               <button
                 onClick={handleAddBuyCount}
                 className='border-1 h-12 w-[32%]	border border-orange bg-bgorange text-orange'
               >
-                <div className=' m-auto flex w-[75%] items-center justify-between'>
+                <div className=' m-auto flex w-[75%] items-center justify-center'>
                   <BsCartPlus className='text-xl	' />
-                  <span className='text-base	'>thêm vào giỏ hàng</span>
+                  <span className='text-base ml-2	'>{t('ProductDetail:ProductDetail.add to cart')}</span>
                 </div>
               </button>
               <button
                 onClick={handleBuyNow}
                 className='ml-4 flex h-12 w-[17%] items-center justify-center bg-orange text-white'
               >
-                Mua ngay
+                {t('ProductDetail:ProductDetail.Buy now')}
               </button>
             </div>
           </div>
@@ -228,7 +232,7 @@ export default function ProductDetails() {
       </div>
       <div className='m-auto mt-8 w-10/12 max-w-screen-2xl	 bg-white p-[10px]'>
         <div className='px-4 pt-4'>
-          <div className='bg-[#00000005] p-[14px] text-lg	'>CHI TIẾT SẢN PHẨM</div>
+          <div className='bg-[#00000005] p-[14px] text-lg	'>{t('ProductDetail:ProductDetail.PRODUCT DETAILS')}</div>
           <div className='m-auto mt-7 w-[97.5%]' dangerouslySetInnerHTML={{ __html: data.data.data.description }} />
         </div>
       </div>

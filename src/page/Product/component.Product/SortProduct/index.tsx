@@ -48,13 +48,15 @@ export default function SortProduct({ queryConfig, pageSize }: pageSize) {
   const { t } = useTranslation()
 
   return (
-    <div className=' flex h-14 items-center bg-zinc-200 text-sm'>
-      <div className='m-auto flex w-[97%] items-center justify-between'>
-        <div className='flex w-[67%] justify-between '>
-          <span className='flex h-8 w-[15%] items-center justify-center'>{t('AsideFiller.Sorted by')}</span>
+    <div className=' flex h-14 items-center 	 bg-zinc-200 text-sm max-[850px]:h-auto'>
+      <div className='m-auto flex w-[97%] items-center justify-between max-[850px]:flex-col '>
+        <div className='flex w-[67%] justify-between  max-[1000px]:w-[85%] max-[850px]:flex-col  '>
+          <span className='flex h-8 w-[15%] items-center justify-center max-[850px]:mt-2 max-[700px]:w-[40%] '>
+            {t('AsideFiller.Sorted by')}
+          </span>
           <button
             onClick={() => handleSoft((queryConfig.sort_by = 'view'))}
-            className={classNames('flex h-8 w-[15%] items-center justify-center', {
+            className={classNames('flex h-8 w-[15%] items-center justify-center max-[850px]:mt-2 max-[700px]:w-[40%]', {
               ' bg-orange text-white': activeSort_by('view'),
               'bg-white': !activeSort_by('view')
             })}
@@ -63,7 +65,7 @@ export default function SortProduct({ queryConfig, pageSize }: pageSize) {
           </button>
           <button
             onClick={() => handleSoft((queryConfig.sort_by = 'createdAt'))}
-            className={classNames('flex h-8 w-[15%] items-center justify-center', {
+            className={classNames('flex h-8 w-[15%] items-center justify-center max-[850px]:mt-2 max-[700px]:w-[40%]', {
               ' bg-orange text-white': activeSort_by('createdAt'),
               'bg-white': !activeSort_by('createdAt')
             })}
@@ -72,14 +74,14 @@ export default function SortProduct({ queryConfig, pageSize }: pageSize) {
           </button>
           <button
             onClick={() => handleSoft((queryConfig.sort_by = 'sold'))}
-            className={classNames('flex h-8 w-[15%] items-center justify-center', {
+            className={classNames('flex h-8 w-[15%] items-center justify-center max-[850px]:mt-2 max-[700px]:w-[40%]', {
               ' bg-orange text-white': activeSort_by('sold'),
               'bg-white': !activeSort_by('sold')
             })}
           >
             {t('AsideFiller.Selling')}
           </button>
-          <div className='flex h-8 w-[30%] items-center justify-center bg-white'>
+          <div className='flex h-8 w-[30%] items-center justify-center bg-white max-[850px]:mt-2 max-[700px]:w-[40%]'>
             <select
               onChange={(e) => handleOnchange(e.target.value as Exclude<ProductConfig['order'], undefined>)}
               className='m-auto h-8 w-[90%] outline-none'
@@ -98,7 +100,7 @@ export default function SortProduct({ queryConfig, pageSize }: pageSize) {
             </select>
           </div>
         </div>
-        <div className='flex w-[12%] items-center justify-between'>
+        <div className='flex w-[12%] items-center justify-between max-[850px]:my-2 max-[700px]:w-[20%]'>
           <div>
             <span className='text-orange'>{page}</span>
             <span>/{pageSize}</span>
@@ -136,7 +138,7 @@ export default function SortProduct({ queryConfig, pageSize }: pageSize) {
                     page: (page + 1).toString()
                   }).toString()
                 }}
-                className='flex w-3/6 items-center justify-center bg-white'
+                className='flex w-3/6 items-center  justify-center bg-white'
               >
                 <MdKeyboardArrowRight />
               </Link>

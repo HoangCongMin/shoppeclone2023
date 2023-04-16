@@ -15,6 +15,7 @@ import { setImage } from '../../../../utils/util'
 import { axiosError } from '../../../../utils/util'
 import { resPonseApi } from '../../../../types/utils.type'
 import UploadAvatar from '../../../../components/UploadAvatar'
+import { useTranslation } from 'react-i18next'
 
 type FromData = Pick<UserSchema, 'address' | 'avatar' | 'name' | 'date_of_birth' | 'phone'>
 type FromDataError = Omit<FromData, 'date_of_birth'> & { date_of_birth?: string }
@@ -98,35 +99,43 @@ export default function ProfileUser() {
       }
     }
   })
+
+  const { t } = useTranslation('user')
   return (
-    <div className='w-full rounded-sm bg-white	shadow-sm	'>
-      <div className='m-auto w-[94%]'>
+    <div className='w-full rounded-sm bg-white	pb-6	shadow-sm'>
+      <div className='m-auto w-[94%] '>
         <div className='border-b border-slate-200 py-[18px]'>
-          <h1 className='text-lg	font-medium capitalize	text-[#333]'>Hồ sơ của tôi</h1>
-          <div className='mt-1 text-sm text-[#555]'>Quản lý thông tin hồ sơ để bảo mật tài khoản</div>
+          <h1 className='text-lg	font-medium capitalize	text-[#333]'>{t('User:User.my profile')}</h1>
+          <div className='mt-1 text-sm text-[#555]'>
+            {t('User:User.Manage profile information for account security')}
+          </div>
         </div>
-        <form className='mt-8 flex w-full ' onSubmit={handleFromValue}>
-          <div className='flex w-[70%] items-center justify-center'>
+        <form className='mt-8 flex w-full max-[900px]:flex-col-reverse' onSubmit={handleFromValue}>
+          <div className='flex w-[70%] items-center justify-center max-[900px]:w-[100%]'>
             <div className='w-[95%]'>
               <div className='m-auto flex w-[95%] items-center justify-between'>
                 <div className='w-[22%] text-right text-sm text-[#555555CC]'>mail</div>
                 <div className=' w-[75%] rounded-sm	 '> {dataUser?.email}</div>
               </div>
               <div className='m-auto mt-8 flex w-[95%] items-center justify-between'>
-                <div className='w-[22%] text-right text-sm text-[#555555CC]'>Tên đăng nhập</div>
+                <div className=' w-[22%] text-right text-sm text-[#555555CC] max-[900px]:hidden'>
+                  {t('User:User.user name')}
+                </div>
                 <Input
                   register={register}
                   name='name'
                   errors={errors.name?.message}
                   type='text'
                   className='h-full w-full  p-3	 outline-none'
-                  placeholder='Tên'
-                  classNameDiv='h-10 w-[75%] rounded-sm border border-gray-300'
+                  placeholder={`${t('User:User.user name')}`}
+                  classNameDiv='h-10 w-[75%] rounded-sm border border-gray-300 max-[900px]:w-[100%]'
                 />
               </div>
 
               <div className='m-auto mt-8 flex w-[95%] items-center justify-between'>
-                <div className='w-[22%] text-right text-sm text-[#555555CC]'>Số điện thoại</div>
+                <div className='w-[22%] text-right text-sm text-[#555555CC] max-[900px]:hidden'>
+                  {t('User:User.Phone number')}
+                </div>
                 <Controller
                   control={control}
                   name='phone'
@@ -134,7 +143,7 @@ export default function ProfileUser() {
                     <InputNumBer
                       type='text'
                       className='h-full w-full  p-3	 outline-none'
-                      classNameDiv='h-10 w-[75%] rounded-sm border border-gray-300'
+                      classNameDiv='h-10 w-[75%] rounded-sm border border-gray-300 max-[900px]:w-[100%]'
                       {...field}
                       onChange={(e) => field.onChange(e)}
                       value={field.value}
@@ -144,18 +153,22 @@ export default function ProfileUser() {
                 />
               </div>
               <div className='m-auto mt-8 flex w-[95%] items-center justify-between'>
-                <div className='w-[22%] text-right text-sm text-[#555555CC]'>Địa chỉ</div>
+                <div className='w-[22%] text-right text-sm text-[#555555CC] max-[900px]:hidden'>
+                  {t('User:User.Address')}
+                </div>
                 <Input
                   register={register}
                   errors={errors.address?.message}
                   type='text'
                   name='address'
                   className='h-full w-full  p-3	 outline-none'
-                  classNameDiv='h-10 w-[75%] rounded-sm border border-gray-300'
+                  classNameDiv='h-10 w-[75%] rounded-sm border border-gray-300 max-[900px]:w-[100%]'
                 />
               </div>
               <div className='m-auto mt-8 flex w-[95%] items-center justify-between'>
-                <div className='w-[22%] text-right text-sm text-[#555555CC]'>Ngày sinh</div>
+                <div className='w-[22%] text-right text-sm text-[#555555CC] max-[900px]:hidden'>
+                  {t('User:User.Date of birth')}
+                </div>
                 <Controller
                   control={control}
                   name='date_of_birth'
@@ -172,13 +185,13 @@ export default function ProfileUser() {
                 <div className='w-[22%]'></div>
                 <div className='w-[75%]'>
                   <Button type='submit' className='h-10 w-16  rounded-sm border bg-orange text-white'>
-                    Luu
+                    {t('User:User.Save')}
                   </Button>
                 </div>
               </div>
             </div>
           </div>
-          <div className='w-[30%]'>
+          <div className='w-[30%] max-[900px]:w-[100%]'>
             <UploadAvatar onChange={setFile} />
           </div>
         </form>

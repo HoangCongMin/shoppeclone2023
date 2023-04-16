@@ -1,0 +1,36 @@
+{
+  "User": {
+    "my profile":"my profile",
+    "Add password":"Add password",
+    "For account security, please do not share your password with others":"For account security, please do not share your password with others",
+    "New password":"New password",
+    "Confirm password": "Confirm password",
+    "old password":"old password",
+    "Confirm":"Confirm",
+    "Change Password":"Change Password",
+    "My account":"My account",
+    "Purchase Order":"Purchase Order",
+    "Edit Profile":"Edit Profile",
+    "User name":"User name",
+    "Manage profile information for account security":"Manage profile information for account security",
+    "user name":"user name",
+    "Phone number":"Phone number",
+    "Address":"Address",
+    "Date of birth":"Date of birth",
+    "Save":"Save",
+    "Choose a photo":"Change",
+    "Maximum file size 1 MB":"Maximum file size 1 MB",
+    "TotalPrice":"Total Price",
+    "Format: .JPEG, .PNG": "Format: .JPEG, .PNG",
+    "In the cart":"In the cart",
+    "All":"All",
+    "Delivering":"Delivering",
+    "Waiting for goods":"Waiting for goods",
+    "Delivered":"Delivered",
+    "Cancelled":"Cancelled",
+    "Profile":"Profile",
+    "Log out":"Log out",
+    "purchase order":"purchase order"
+
+  }
+}

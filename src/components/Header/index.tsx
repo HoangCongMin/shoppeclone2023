@@ -11,7 +11,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Logout } from '../../apis/auth.api'
 import purchases from '../../constants/purchases'
 import { purchaseStatusAll } from '../../types/purchases.type'
-import { RxAvatar } from 'react-icons/rx'
 import { setImage } from '../../utils/util'
 import { useTranslation } from 'react-i18next'
 import { lanGuageAll } from '../../i18n'
@@ -50,15 +49,15 @@ export default function Header() {
 
   const LanGuage = lanGuageAll[i18n.language as keyof typeof lanGuageAll]
   return (
-    <div className='m-auto flex w-10/12 max-w-screen-2xl items-center justify-between pt-2'>
-      <div className='w-5/12'>ok</div>
-      <div className='w-[35%]'>
+    <div className='m-auto flex w-10/12 max-w-screen-2xl items-center justify-between pt-2 max-[1234px]:justify-center  '>
+      <div className='w-5/12 max-[1234px]:hidden'></div>
+      <div className='w-[35%] max-[1234px]:w-[auto] max-[600px]:w-full'>
         <ul className='flex w-full justify-between text-[14px] text-white'>
-          <li className='flex items-center'>
+          <li className='flex items-center max-[434px]:hidden'>
             <FiBell />
             <p className='ml-1'> {t('AsideFiller.Notification')} </p>
           </li>
-          <li className='flex items-center'>
+          <li className='flex items-center max-[434px]:hidden'>
             <AiOutlineQuestionCircle /> <p className='ml-1'> {t('AsideFiller.Support')} </p>
           </li>
           <Popoper
@@ -97,11 +96,11 @@ export default function Header() {
                   />
                   <div className='m-auto w-4/5'>
                     <Link to={Path.User} className='cursor-pointer pt-2 text-[13px] hover:text-orange'>
-                      Trang cá nhân
+                      {t('User:User.Profile')}
                     </Link>
-                    <p className='cursor-pointer pt-2 text-[13px] hover:text-orange'>Đơn mua</p>
+                    <p className='cursor-pointer pt-2 text-[13px] hover:text-orange'>{t('User:User.purchase order')}</p>
                     <button onClick={handleLogout} className='cursor-pointer pt-2 text-[13px] hover:text-orange'>
-                      Đăng xuất
+                      {t('User:User.Log out')}
                     </button>
                   </div>
                 </div>

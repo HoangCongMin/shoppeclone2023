@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState, useMemo } from 'react'
 import { setImage as setImageAll } from '../../utils/util'
 import { myCreateContext } from '../../context/context'
+import { useTranslation } from 'react-i18next'
 interface props {
   onChange: (file: File) => void
 }
@@ -26,11 +27,12 @@ export default function UploadAvatar({ onChange }: props) {
   }
 
   const imageShow = useMemo(() => (image ? URL.createObjectURL(image) : ''), [image])
+  const { t } = useTranslation('user')
 
   return (
-    <div className='w-full border-l border-[#efefef]'>
-      <div className='m-auto w-[65%]'>
-        <div className='m-auto w-[60%]'>
+    <div className='w-full border-l border-[#efefef] max-[900px]:border-none'>
+      <div className='m-auto w-[65%] items-center justify-center max-[900px]:flex max-[900px]:flex-col'>
+        <div className='m-auto w-[60%] max-[900px]:flex max-[900px]:flex-col'>
           <div className='py-5'>
             <img src={imageShow || setImageAll(profileUser?.avatar)} alt='' className='rounded-full' />
           </div>
@@ -45,14 +47,14 @@ export default function UploadAvatar({ onChange }: props) {
           <button
             onClick={handleImage}
             type='button'
-            className='h-10 border border-gray-300 bg-white px-5 text-sm text-[#555]'
+            className='h-10 border border-gray-300 bg-white px-5 text-sm text-[#555] '
           >
-            Chọn ảnh
+            {t('User:User.Choose a photo')}
           </button>
         </div>
-        <div className='m-4 w-full'>
-          <div className='text-sm text-[#999]'>Dụng lượng file tối đa 1 MB</div>
-          <div className='text-sm text-[#999]'>Định dạng:.JPEG, .PNG</div>
+        <div className='m-4 w-full max-[900px]:text-center'>
+          <div className='text-sm text-[#999]'>{t('User:User.Maximum file size 1 MB')}</div>
+          <div className='text-sm text-[#999]'>{t('User:User.Format: .JPEG, .PNG')}</div>
         </div>
       </div>
     </div>

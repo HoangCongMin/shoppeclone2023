@@ -18,7 +18,7 @@ export default function RegisterNavbar() {
           </Link>
           <div className='ml-2	pt-2.5 text-2xl	'>{isRegister0k ? 'đăng ký' : 'đăng nhập '}</div>
         </div>
-        <div>
+        <div className='max-[600px]:hidden'>
           <Link to='/' className='text-orange-500'>
             Bạn cần giúp đỡ?
           </Link>

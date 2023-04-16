@@ -45,16 +45,16 @@ export default function Products() {
   })
 
   return (
-    <div className='w-full bg-zinc-100	'>
+    <div className='w-full bg-zinc-100 pb-16 pt-12	'>
       <Helmet>
         <title>Product Item</title>
       </Helmet>
-      <div className=' m-auto flex w-[84.5%] max-w-screen-2xl justify-between	'>
+      <div className=' m-auto flex w-[84.5%] max-w-screen-2xl justify-between max-[1220px]:flex-col	'>
         <AsideFiller queryConfig={queryConfig} dataCategories={dataCategories?.data.data || []} />
-        <div className='w-[82.4%]'>
+        <div className='w-[82.4%] max-[1220px]:w-full'>
           <SortProduct queryConfig={queryConfig} pageSize={data?.data.data?.pagination?.page_size || 1} />
           <div>
-            <div className='mt-6 grid grid-cols-5 gap-2.5	'>
+            <div className='mt-6 grid grid-cols-5 gap-2.5 max-[1100px]:grid-cols-4 max-[1000px]:grid-cols-3 max-[750px]:grid-cols-2 max-[480px]:grid-cols-1	'>
               {data?.data.data?.products.map((item: Product) => (
                 <div key={item._id}>
                   <ProductLists itemAll={item} />

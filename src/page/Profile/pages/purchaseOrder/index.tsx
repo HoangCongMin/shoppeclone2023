@@ -8,38 +8,44 @@ import Path from '../../../../constants/path'
 import { purchaseStatusAll } from '../../../../types/purchases.type'
 import { formatMoney } from '../../../../utils/util'
 import classNames from 'classnames'
+import { useTranslation } from 'react-i18next'
 
-const ListPurchaseOrder = [
-  {
-    name: 'Trong giỏ hàng',
-    key: purchases.inCart
-  },
-  {
-    name: 'Tất cả',
-    key: purchases.allItem
-  },
-  {
-    name: 'Xác nhận',
-    key: purchases.confirmationShop
-  },
-  {
-    name: 'Chờ lấy hàng',
-    key: purchases.pickedUp
-  },
-  {
-    name: 'Đang giao',
-    key: purchases.transported
-  },
-  {
-    name: 'Đã giao',
-    key: purchases.delivered
-  },
-  {
-    name: 'Đã hủy',
-    key: purchases.cancel
-  }
-]
+
 export default function PurchaseOrder() {
+  const { t } = useTranslation('user')
+
+
+  const ListPurchaseOrder = [
+    {
+      name: t('User:User.In the cart'),
+      key: purchases.inCart
+    },
+    {
+      name: t('User:User.All'),
+      key: purchases.allItem
+    },
+    {
+      name: t('User:User.Confirm'),
+      key: purchases.confirmationShop
+    },
+    {
+      name: t('User:User.Waiting for goods'),
+      key: purchases.pickedUp
+    },
+    {
+      name: t('User:User.Delivering'),
+      key: purchases.transported
+    },
+    {
+      name: t('User:User.Delivered'),
+      key: purchases.delivered
+    },
+    {
+      name: t('User:User.Cancelled'),
+      key: purchases.cancel
+    }
+  ]
+
   const paramPurChase: { status?: purchaseStatusAll } = useQueryParam()
   const paramPurChaseStatus: number = paramPurChase.status || purchases.allItem
 
@@ -52,7 +58,7 @@ export default function PurchaseOrder() {
 
   return (
     <div className='w-full'>
-      <div className='flex w-full justify-between bg-white'>
+      <div className='flex w-full justify-between bg-white max-[900px]:flex-col'>
         {ListPurchaseOrder.map((item) => (
           <Link
             to={{
@@ -63,7 +69,7 @@ export default function PurchaseOrder() {
             }}
             key={item.key}
             className={classNames(
-              `flex h-14 w-[14.5%] cursor-pointer items-center justify-center text-center text-base ${
+              `flex h-14 w-[14.5%] cursor-pointer items-center justify-center text-center text-base max-[900px]:w-[100%] ${
                 paramPurChaseStatus === item.key
                   ? 'border-b-2	 border-orange text-orange '
                   : 'border-b-2 border-slate-200 text-black'
@@ -91,7 +97,7 @@ export default function PurchaseOrder() {
           </div>
           <div className='m-auto flex w-11/12 flex-row-reverse 	'>
             <div className='flex items-center'>
-              <div>Tổng Giá Tiền :</div>
+              <div>{t('User:User.TotalPrice')}</div>
               <div className='ml-2 text-2xl text-orange'>₫{formatMoney(item.buy_count * item.price)}</div>
             </div>
           </div>

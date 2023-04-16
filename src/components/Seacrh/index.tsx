@@ -12,7 +12,10 @@ export default function Seacrh({ classNameBorder, classButton }: props) {
   const { register, handleSearch } = useSreach()
 
   return (
-    <form onSubmit={handleSearch} className={classNames(`flex items-center bg-white  ${classNameBorder}`)}>
+    <form
+      onSubmit={handleSearch}
+      className={classNames(`flex items-center bg-white max-md:hidden  ${classNameBorder}`)}
+    >
       <input {...register('search')} className='h-8 w-11/12 px-2 outline-none' type='text' placeholder='search' />
       <button
         type='submit'

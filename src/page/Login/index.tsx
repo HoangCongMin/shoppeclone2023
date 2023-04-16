@@ -119,12 +119,12 @@ export default function Login() {
         <title>đăng nhập</title>
       </Helmet>
       <div className='m-auto grid w-4/5 max-w-screen-2xl grid-cols-5 py-12 	'>
-        <div className='col-span-2 col-start-4 my-2.5	bg-white '>
+        <div className='col-span-2 col-start-4 my-2.5	bg-white max-[950px]:col-span-3 max-[700px]:col-span-5'>
           <form onSubmit={handleClick} className='	m-auto w-4/5'>
             <div className='mt-5 text-2xl'>{isRegister0k ? 'đăng ký' : 'đăng nhập'}</div>
             <Input
               classNameError={'mt-1 min-h-[1rem] text-sm text-red-500'}
-              className={'mt-5 w-full border bg-white p-2 outline-0 outline-black'}
+              className={'mt-5 w-full border bg-white p-2 outline-0 outline-black '}
               name={'email'}
               type={'text'}
               placeholder={'email'}
@@ -133,8 +133,10 @@ export default function Login() {
               register={register}
             />
             <Input
+              classNameDiv={'relative'}
+              classNameLogin={'top-5'}
               classNameError={'mt-1 min-h-[1rem] text-sm text-red-500'}
-              className={'mt-2 w-full border  bg-white p-2 outline-0	outline-black'}
+              className={'mt-2 w-full border  bg-white p-2 outline-0	outline-black '}
               name={'password'}
               type={'password'}
               placeholder={'password'}
@@ -151,6 +153,8 @@ export default function Login() {
                 type={'password'}
                 placeholder={'confirm password'}
                 //  Rules={Rules.confirm_password}
+                classNameDiv={'relative'}
+                classNameLogin={'top-[1.25rem]'}
                 errors={errors.confirm_password?.message}
                 register={register}
               />
@@ -182,7 +186,6 @@ export default function Login() {
               <div className='w-2/5 border'></div>
             </div>
             <div className='mb-4 text-center text-gray-400'>
-              {/* Bạn mới biết đến Shopee?{' '} */}
               {textValue}
               <span onClick={handleRegister} className='text-orange'>
                 {' '}
