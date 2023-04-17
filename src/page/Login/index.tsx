@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
 import Path from '../../constants/path'
 import { Helmet } from 'react-helmet'
-import { user } from 'types/user.type'
+import { user } from '../../types/user.type'
 
 type FromData = Pick<Schema, 'email' | 'password' | 'confirm_password'>
 const logInSchema = schema.pick(['email', 'password'])
