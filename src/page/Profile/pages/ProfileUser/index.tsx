@@ -181,6 +181,7 @@ export default function ProfileUser() {
                   )}
                 />
               </div>
+              <div className='text-center text-red-500'>{errors.date_of_birth?.message}</div>
               <div className='m-auto mt-8 flex w-[95%] justify-between'>
                 <div className='w-[22%]'></div>
                 <div className='w-[75%]'>

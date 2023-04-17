@@ -100,7 +100,6 @@ export default function ProductDetails() {
 
   const { t } = useTranslation(['productDetail'])
 
-
   if (!data?.data.data) {
     return null
   }
@@ -129,8 +128,8 @@ export default function ProductDetails() {
 
   return (
     <div className='w-full bg-[#e5e7eb] pt-11 pb-20'>
-      <div className='m-auto flex w-10/12 max-w-screen-2xl justify-between bg-white py-10'>
-        <div className='w-6/12 pt-3'>
+      <div className='m-auto flex w-10/12 max-w-screen-2xl justify-between bg-white py-10 max-[1244px]:flex-col'>
+        <div className='w-6/12 pt-3 max-[1244px]:w-full'>
           <div className=' m-auto w-[95%]'>
             <div
               className='relative overflow-hidden pt-[100%]	'
@@ -164,7 +163,7 @@ export default function ProductDetails() {
           </div>
         </div>
 
-        <div className='w-9/12'>
+        <div className='w-9/12 max-[1244px]:mt-9  max-[1244px]:w-full'>
           <div className='m-auto w-[96%] pt-3'>
             <h1 className='text-xl	font-medium	'>{data?.data.data?.name}</h1>
             <div className='mt-3'>
@@ -182,21 +181,23 @@ export default function ProductDetails() {
                 <div className='h-6	border-r-[1px] border-solid border-gray-400'></div>
                 <div className='flex items-center'>
                   <p className='text-base	'>{data?.data.data?.sold}</p>
-                  <span className='ml-1 text-sm text-[#767676] '>{t('ProductDetail:ProductDetail.Sold')}</span>
+                  <span className='ml-1 w-12 text-sm text-[#767676]'>{t('ProductDetail:ProductDetail.Sold')}</span>
                   <AiOutlineQuestionCircle className='ml-1 text-sm text-[#767676]	' />
                 </div>
               </div>
             </div>
             <div className=' mt-3 w-full bg-[#fafafa]'>
-              <div className='m-auto flex h-16 w-[95%]	 items-center'>
+              <div className='m-auto flex h-16 w-[95%]	 items-center max-[500px]:flex-col  max-[500px]:items-start'>
                 <div className='text-base text-[#929292] line-through'>{`₫${formatMoney(
                   data.data.data.price_before_discount
                 )}`}</div>
-                <div className='ml-3 text-3xl text-[#ee4d2d]	'>{`₫${formatMoney(data.data.data.price)}`}</div>
-                <div className='ml-3 rounded bg-[#ee4d2d] px-1	py-0.5	text-xs	font-semibold	text-white	'>{`${saleUtil(
-                  data.data.data.price_before_discount,
-                  data.data.data.price
-                )} ${t('ProductDetail:ProductDetail.discount')}`}</div>
+                <div className='flex items-center'>
+                  <div className='ml-3 text-3xl text-[#ee4d2d] max-[500px]:ml-0	'>{`₫${formatMoney(data.data.data.price)}`}</div>
+                  <div className='ml-3 rounded bg-[#ee4d2d] px-1	py-0.5	text-xs	font-semibold	text-white	'>{`${saleUtil(
+                    data.data.data.price_before_discount,
+                    data.data.data.price
+                  )} ${t('ProductDetail:ProductDetail.discount')}`}</div>
+                </div>
               </div>
             </div>
             <div className='mt-4 flex  w-full items-center'>
@@ -208,21 +209,25 @@ export default function ProductDetails() {
                 oneMinusOne={handleBuyCount}
                 max={ProductDetailsAll?.quantity}
               />
-              <div className='ml-4 text-sm text-[#757575]'>{`${data.data.data.quantity} ${t('ProductDetail:ProductDetail.products available')}`}</div>
+              <div className='ml-4 text-sm text-[#757575]'>{`${data.data.data.quantity} ${t(
+                'ProductDetail:ProductDetail.products available'
+              )}`}</div>
             </div>
             <div className='mt-7 flex w-full'>
               <button
                 onClick={handleAddBuyCount}
-                className='border-1 h-12 w-[32%]	border border-orange bg-bgorange text-orange'
+                className='border-1 h-12 w-[32%] border border-orange	bg-bgorange text-orange max-[747px]:w-[40%] max-[500px]:w-[50%]'
               >
-                <div className=' m-auto flex w-[75%] items-center justify-center'>
+                <div className=' m-auto flex w-[85%] items-center justify-center'>
                   <BsCartPlus className='text-xl	' />
-                  <span className='text-base ml-2	'>{t('ProductDetail:ProductDetail.add to cart')}</span>
+                  <span className='ml-2 text-base	max-[747px]:text-xs	'>
+                    {t('ProductDetail:ProductDetail.add to cart')}
+                  </span>
                 </div>
               </button>
               <button
                 onClick={handleBuyNow}
-                className='ml-4 flex h-12 w-[17%] items-center justify-center bg-orange text-white'
+                className='ml-4 flex h-12 w-[17%] items-center justify-center bg-orange text-white max-[747px]:w-[27%] max-[747px]:text-xs	'
               >
                 {t('ProductDetail:ProductDetail.Buy now')}
               </button>
@@ -237,7 +242,7 @@ export default function ProductDetails() {
         </div>
       </div>
       <div className='m-auto w-10/12 max-w-screen-2xl	'>
-        <div className='mt-6 grid grid-cols-5 gap-2.5	'>
+        <div className='mt-6 grid grid-cols-5 gap-2.5	max-[1100px]:grid-cols-4 max-[1000px]:grid-cols-3 max-[750px]:grid-cols-2 max-[480px]:grid-cols-1	'>
           {productListAll?.data.data?.products.map((item: Product) => (
             <div key={item._id}>
               <ProductLists itemAll={item} />
