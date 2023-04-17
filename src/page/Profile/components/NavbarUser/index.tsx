@@ -14,6 +14,7 @@ export default function NavbarUser() {
 
   const { t } = useTranslation('user')
 
+
   return (
     <div>
       <div className='flex items-center border-b border-slate-200 py-5'>

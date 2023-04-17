@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
 import Path from '../../constants/path'
 import { Helmet } from 'react-helmet'
+import { user } from 'types/user.type'
 
 type FromData = Pick<Schema, 'email' | 'password' | 'confirm_password'>
 const logInSchema = schema.pick(['email', 'password'])
@@ -24,7 +25,7 @@ const registerSchema = schema.pick(['email', 'password', 'confirm_password'])
 
 export default function Login() {
   const Navigate = useNavigate()
-  const { setLoginAndRegister, isRegister0k, setIsRegister0k } = useContext(myCreateContext)
+  const { setLoginAndRegister, isRegister0k, setIsRegister0k,setProfileUser } = useContext(myCreateContext)
   // const [registerItem, setRegisterItem] = useState(false)
   const dynamicLogin = isRegister0k ? registerSchema : logInSchema
   const {
@@ -74,8 +75,8 @@ export default function Login() {
       })
     } else {
       mutation.mutate(data, {
-        onSuccess: () => {
-          setLoginAndRegister(true), Navigate(Path.Home)
+        onSuccess: (data) => {
+          setLoginAndRegister(true),setProfileUser(data.data.data?.user as user), Navigate(Path.Home)
         },
         onError: (errors) => {
           // sử lý lỗi ép kiểu axiosError

@@ -13,4 +13,5 @@ export interface user {
   createdAt: string
   updatedAt: string
   avatar?: string
+  
 }
