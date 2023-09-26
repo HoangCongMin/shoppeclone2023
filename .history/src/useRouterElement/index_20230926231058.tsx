@@ -102,18 +102,7 @@ export default function useRouterElement() {
               </Suspense>
             </CartLayout>
           )
-        },
-        {
-          path: Path.Home,
-          index: true,
-          element: (
-            <Main>
-              <Suspense>
-                <Product />
-              </Suspense>
-            </Main>
-          )
-        },
+        }
       ]
     },
    

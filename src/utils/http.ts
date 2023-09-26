@@ -10,6 +10,8 @@ import {
 } from './auth'
 import { URL_LOGIN, URL_LOGOUT, URL_REGISTER, URL_REFRESH_TOKEN } from '../apis/auth.api'
 
+
+
 export class Http {
   instance: AxiosInstance
   private accesstoken: string
@@ -24,7 +26,7 @@ export class Http {
       baseURL: 'https://api-ecom.duthanhduoc.com/',
       timeout: 5000,
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
         // 'expire-access-token': 10,
         // 'expire-refresh-token': 600
       }

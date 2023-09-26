@@ -36,7 +36,17 @@ const Jejected = () => {
 
 export default function useRouterElement() {
   const element = useRoutes([
-    
+    // {
+    //   path: Path.Home,
+    //   index: true,
+    //   element: (
+    //     <Main>
+    //       <Suspense>
+    //         <Product />
+    //       </Suspense>
+    //     </Main>
+    //   )
+    // },
     {
       path: '',
       element: <Protected />,
@@ -56,7 +66,6 @@ export default function useRouterElement() {
                 </Main>
               )
             },
-           
             {
               path: Path.User,
               element: (
@@ -80,28 +89,8 @@ export default function useRouterElement() {
                   </UserLayout>
                 </Main>
               )
-            },
-            {
-              path: Path.id,
-              element: (
-                <Main>
-                  <Suspense>
-                    <ProductDetails />
-                  </Suspense>
-                </Main>
-              )
-            },
+            }
           ]
-        },
-        {
-          path: Path.cart,
-          element: (
-            <CartLayout>
-              <Suspense>
-                <Cart />
-              </Suspense>
-            </CartLayout>
-          )
         },
         {
           path: Path.Home,
@@ -113,10 +102,29 @@ export default function useRouterElement() {
               </Suspense>
             </Main>
           )
+        }
+        {
+          path: Path.cart,
+          element: (
+            <CartLayout>
+              <Suspense>
+                <Cart />
+              </Suspense>
+            </CartLayout>
+          )
         },
       ]
     },
-   
+    // {
+    //   path: Path.id,
+    //   element: (
+    //     <Main>
+    //       <Suspense>
+    //         <ProductDetails />
+    //       </Suspense>
+    //     </Main>
+    //   )
+    // },
     {
       path: '',
       element: <Jejected />,
@@ -133,16 +141,16 @@ export default function useRouterElement() {
         }
       ]
     },
-    // {
-    //   path: '*',
-    //   element: (
-    //     <Main>
-    //       <Suspense>
-    //         <NotFound />
-    //       </Suspense>
-    //     </Main>
-    //   )
-    // }
+    {
+      path: '*',
+      element: (
+        <Main>
+          <Suspense>
+            <NotFound />
+          </Suspense>
+        </Main>
+      )
+    }
   ])
   return element
 }

@@ -44,6 +44,7 @@ export default function Products() {
     queryFn: getCategories
   })
 
+
   return (
     <div className='w-full bg-zinc-100 pb-16 pt-12	'>
       <Helmet>

@@ -192,7 +192,9 @@ export default function ProductDetails() {
                   data.data.data.price_before_discount
                 )}`}</div>
                 <div className='flex items-center'>
-                  <div className='ml-3 text-3xl text-[#ee4d2d] max-[500px]:ml-0	'>{`₫${formatMoney(data.data.data.price)}`}</div>
+                  <div className='ml-3 text-3xl text-[#ee4d2d] max-[500px]:ml-0	'>{`₫${formatMoney(
+                    data.data.data.price
+                  )}`}</div>
                   <div className='ml-3 rounded bg-[#ee4d2d] px-1	py-0.5	text-xs	font-semibold	text-white	'>{`${saleUtil(
                     data.data.data.price_before_discount,
                     data.data.data.price

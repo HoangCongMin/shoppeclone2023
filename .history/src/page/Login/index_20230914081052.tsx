@@ -25,8 +25,7 @@ const registerSchema = schema.pick(['email', 'password', 'confirm_password'])
 
 export default function Login() {
   const Navigate = useNavigate()
-  const { setLoginAndRegister, isRegister0k, setIsRegister0k, setProfileUser, profileUser } =
-    useContext(myCreateContext)
+  const { setLoginAndRegister, isRegister0k, setIsRegister0k,setProfileUser ,profileUser} = useContext(myCreateContext)
   // const [registerItem, setRegisterItem] = useState(false)
   const dynamicLogin = isRegister0k ? registerSchema : logInSchema
   const {
@@ -42,6 +41,7 @@ export default function Login() {
   }
   // const Rules=getRules(getValues)
 
+
   const mutation = useMutation({
     mutationFn: (body: Omit<FromData, 'confirm_password'>) => {
       return isRegister0k ? RegisterApi(body) : LoginApi(body)
@@ -50,8 +50,8 @@ export default function Login() {
   const handleClick = handleSubmit((data) => {
     if (isRegister0k) {
       mutation.mutate(omit(data, ['confirm_password']), {
-        onSuccess: (data) => {
-          setLoginAndRegister(true), setProfileUser(data.data.data?.user as user), Navigate(Path.Home)
+        onSuccess: () => {
+          setLoginAndRegister(true),setProfileUser(data.data.data?.user as user), Navigate(Path.Home)
         },
         onError: (errors) => {
           // sử lý lỗi ép kiểu axiosError
@@ -78,7 +78,7 @@ export default function Login() {
       mutation.mutate(data, {
         onSuccess: (data) => {
           console.log(data)
-          setLoginAndRegister(true), setProfileUser(data.data.data?.user as user), Navigate(Path.Home)
+          setLoginAndRegister(true),setProfileUser(data.data.data?.user as user), Navigate(Path.Home)
         },
         onError: (errors) => {
           // sử lý lỗi ép kiểu axiosError

@@ -9,8 +9,7 @@ import ErrorBoundary from './components/ErrorBoundary'
 
 function App() {
   const useRouter = element()
-  const { reset,LoginAndRegister } = useContext(myCreateContext)
-  console.log(LoginAndRegister)
+  const { reset,isRegister0k } = useContext(myCreateContext)
   useEffect(() => {
     localStorageClearContext.addEventListener('statusClear', reset)
     return () => {

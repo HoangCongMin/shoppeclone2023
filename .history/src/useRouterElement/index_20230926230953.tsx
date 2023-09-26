@@ -56,7 +56,17 @@ export default function useRouterElement() {
                 </Main>
               )
             },
-           
+            {
+              path: Path.Home,
+              index: true,
+              element: (
+                <Main>
+                  <Suspense>
+                    <Product />
+                  </Suspense>
+                </Main>
+              )
+            },
             {
               path: Path.User,
               element: (
@@ -80,17 +90,7 @@ export default function useRouterElement() {
                   </UserLayout>
                 </Main>
               )
-            },
-            {
-              path: Path.id,
-              element: (
-                <Main>
-                  <Suspense>
-                    <ProductDetails />
-                  </Suspense>
-                </Main>
-              )
-            },
+            }
           ]
         },
         {
@@ -102,18 +102,7 @@ export default function useRouterElement() {
               </Suspense>
             </CartLayout>
           )
-        },
-        {
-          path: Path.Home,
-          index: true,
-          element: (
-            <Main>
-              <Suspense>
-                <Product />
-              </Suspense>
-            </Main>
-          )
-        },
+        }
       ]
     },
    
