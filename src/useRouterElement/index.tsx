@@ -36,7 +36,6 @@ const Jejected = () => {
 
 export default function useRouterElement() {
   const element = useRoutes([
-    
     {
       path: '',
       element: <Protected />,
@@ -56,7 +55,7 @@ export default function useRouterElement() {
                 </Main>
               )
             },
-           
+
             {
               path: Path.User,
               element: (
@@ -90,7 +89,7 @@ export default function useRouterElement() {
                   </Suspense>
                 </Main>
               )
-            },
+            }
           ]
         },
         {
@@ -113,10 +112,10 @@ export default function useRouterElement() {
               </Suspense>
             </Main>
           )
-        },
+        }
       ]
     },
-   
+
     {
       path: '',
       element: <Jejected />,
@@ -130,9 +129,19 @@ export default function useRouterElement() {
               </Suspense>
             </Register>
           )
+        },
+        {
+          path: '*',
+          element: (
+            <Main>
+              <Suspense>
+                <NotFound />
+              </Suspense>
+            </Main>
+          )
         }
       ]
-    },
+    }
     // {
     //   path: '*',
     //   element: (
