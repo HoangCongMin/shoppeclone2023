@@ -104,7 +104,6 @@ export default function useRouterElement() {
         },
         {
           path: Path.Home,
-          index: true,
           element: (
             <Main>
               <Suspense>
@@ -141,17 +140,28 @@ export default function useRouterElement() {
           )
         }
       ]
+    },
+    {
+      path: '*',
+      element: (
+        <Main>
+          <Suspense>
+            <NotFound />
+          </Suspense>
+        </Main>
+      )
+    },
+    {
+      path: Path.Home,
+      index: true,
+      element: (
+        <Main>
+          <Suspense>
+            <Product />
+          </Suspense>
+        </Main>
+      )
     }
-    // {
-    //   path: '*',
-    //   element: (
-    //     <Main>
-    //       <Suspense>
-    //         <NotFound />
-    //       </Suspense>
-    //     </Main>
-    //   )
-    // }
   ])
   return element
 }
