@@ -80,16 +80,7 @@ export default function useRouterElement() {
                 </Main>
               )
             },
-            {
-              path: Path.id,
-              element: (
-                <Main>
-                  <Suspense>
-                    <ProductDetails />
-                  </Suspense>
-                </Main>
-              )
-            }
+            
           ]
         },
         {
@@ -147,6 +138,16 @@ export default function useRouterElement() {
         <Main>
           <Suspense>
             <NotFound />
+          </Suspense>
+        </Main>
+      )
+    },
+    {
+      path: Path.id,
+      element: (
+        <Main>
+          <Suspense>
+            <ProductDetails />
           </Suspense>
         </Main>
       )
